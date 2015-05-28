@@ -12,11 +12,11 @@ public abstract class AbsRecyclerViewAdapter extends RecyclerView.Adapter<AbsRec
 	}
 
 	public interface OnItemClickListener {
-		public void onItemClicked(int position);
+		public void onItemClick(int position, ClickableViewHolder holder);
 	}
 
 	public interface OnItemLongClickListener {
-		public boolean onItemLongClicked(int position);
+		public boolean onItemLongClick(int position, ClickableViewHolder holder);
 	}
 
 	private OnItemClickListener itemClickListener;
@@ -39,12 +39,12 @@ public abstract class AbsRecyclerViewAdapter extends RecyclerView.Adapter<AbsRec
 	}
 
 	@Override
-	public void onBindViewHolder(ClickableViewHolder holder, final int position) {
+	public void onBindViewHolder(final ClickableViewHolder holder, final int position) {
 		holder.getParentView().setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if (itemClickListener != null) {
-					itemClickListener.onItemClicked(position);
+					itemClickListener.onItemClick(position, holder);
 				}
 			}
 		});
@@ -52,7 +52,7 @@ public abstract class AbsRecyclerViewAdapter extends RecyclerView.Adapter<AbsRec
 			@Override
 			public boolean onLongClick(View v) {
 				if (itemLongClickListener != null) {
-					return itemLongClickListener.onItemLongClicked(position);
+					return itemLongClickListener.onItemLongClick(position, holder);
 				} else {
 					return false;
 				}
