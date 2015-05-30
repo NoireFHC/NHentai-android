@@ -7,6 +7,7 @@
                                     android:layout_margin="5dp"
                                     android:foreground="?attr/selectableItemBackground"
                                     android:clickable="true"
+                                    android:id="@+id/book_card"
                                     app:cardElevation="4dp"
                                     app:cardCornerRadius="2dp">
 

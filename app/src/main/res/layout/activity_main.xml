@@ -1,22 +1,36 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".MainActivity">
+<android.support.design.widget.CoordinatorLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/main_content"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
 
-	<com.github.florent37.materialviewpager.MaterialViewPager
-		android:id="@+id/view_pager"
+	<android.support.design.widget.AppBarLayout
+		android:id="@+id/appbar"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+		<android.support.v7.widget.Toolbar
+			android:layout_width="match_parent"
+			android:layout_height="?attr/actionBarSize"
+			android:background="?attr/colorPrimary"
+			android:id="@+id/toolbar"
+			app:layout_scrollFlags="scroll|enterAlways"/>
+
+		<android.support.design.widget.TabLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/tabs"
+			android:layout_marginLeft="8dp"
+			android:layout_marginRight="8dp"/>
+
+	</android.support.design.widget.AppBarLayout>
+
+	<android.support.v4.view.ViewPager
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		app:viewpager_color="?attr/colorPrimary"
-		app:viewpager_hideLogoWithFade="false"
-		app:viewpager_hideToolbarAndTitle="false"
-		app:viewpager_enableToolbarElevation="true"
-		app:viewpager_parallaxHeaderFactor="1.5"
-		app:viewpager_headerAdditionalHeight="50dp"
-	    app:viewpager_pagerTitleStrip="@layout/layout_pager_strip"
-	    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-		/>
+		android:id="@+id/viewpager"
+		app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-</FrameLayout>
+</android.support.design.widget.CoordinatorLayout>

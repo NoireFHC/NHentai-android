@@ -43,6 +43,7 @@ public class BookListRecyclerAdapter extends AbsRecyclerViewAdapter {
 
 	@Override
 	public void onBindViewHolder(ClickableViewHolder holder, int position) {
+		super.onBindViewHolder(holder, position);
 		if (holder instanceof ViewHolder) {
 			ViewHolder mHolder = (ViewHolder) holder;
 			mHolder.mTitleTextView.setText(data.get(position).title);
@@ -61,6 +62,7 @@ public class BookListRecyclerAdapter extends AbsRecyclerViewAdapter {
 					Log.i(TAG, "You clicked item no." + i);
 				}
 			});
+			mHolder.book = data.get(position);
 		}
 	}
 
@@ -76,6 +78,9 @@ public class BookListRecyclerAdapter extends AbsRecyclerViewAdapter {
 		public ImageButton mMenuButton;
 
 		public ListPopupWindow mPopupWindow;
+
+		// 此处应该是错误用法
+		public Book book;
 
 		public ViewHolder(View itemView) {
 			super(itemView);

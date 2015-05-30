@@ -2,6 +2,7 @@ package moe.feng.nhentai.ui.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -9,13 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
-import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
-
 import java.util.ArrayList;
 
 import moe.feng.nhentai.R;
 import moe.feng.nhentai.model.Book;
+import moe.feng.nhentai.ui.BookDetailsActivity;
 import moe.feng.nhentai.ui.adapter.BookListRecyclerAdapter;
 import moe.feng.nhentai.ui.common.AbsRecyclerViewAdapter;
 
@@ -56,11 +55,18 @@ public class FavoriteFragment extends Fragment {
 		return view;
 	}
 
+
 	private void setRecyclerViewAdapter(BookListRecyclerAdapter adapter) {
-		RecyclerViewMaterialAdapter materialAdapter = new RecyclerViewMaterialAdapter(new RecyclerViewMaterialAdapter(adapter));
-		mRecyclerView.setAdapter(materialAdapter);
-		MaterialViewPagerHelper.registerRecyclerView(getActivity(), mRecyclerView, null);
-		mRecyclerView.scrollToPosition(1);
+		mRecyclerView.setAdapter(mAdapter);
+		mAdapter.setOnItemClickListener(new AbsRecyclerViewAdapter.OnItemClickListener() {
+			@Override
+			public void onItemClick(int position, AbsRecyclerViewAdapter.ClickableViewHolder viewHolder) {
+				BookListRecyclerAdapter.ViewHolder holder = (BookListRecyclerAdapter.ViewHolder) viewHolder;
+				Log.i(TAG, "You clicked position no." + position + " item, " +
+						"its name is " + holder.mTitleTextView.getText().toString());
+				BookDetailsActivity.launch((AppCompatActivity) getActivity(), holder.mPreviewImageView, holder.book);
+			}
+		});
 	}
 
 }
