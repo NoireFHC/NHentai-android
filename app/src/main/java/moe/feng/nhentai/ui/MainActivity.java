@@ -25,10 +25,10 @@ public class MainActivity extends AppCompatActivity {
 		Toolbar toolbar = mPager.getToolbar();
 		if (toolbar != null) {
 			setSupportActionBar(toolbar);
-			getSupportActionBar().setDisplayShowTitleEnabled(true);
+			getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 		}
 
-		mPagerAdapter = new HomePagerAdapter(getFragmentManager());
+		mPagerAdapter = new HomePagerAdapter(getApplicationContext(), getFragmentManager());
 		mPager.getViewPager().setAdapter(mPagerAdapter);
 		mPager.getPagerTitleStrip().setViewPager(mPager.getViewPager());
 	}

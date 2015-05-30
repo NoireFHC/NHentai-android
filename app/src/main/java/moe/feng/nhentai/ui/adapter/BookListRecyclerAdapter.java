@@ -52,7 +52,7 @@ public class BookListRecyclerAdapter extends AbsRecyclerViewAdapter {
 				// TODO 显示本子的预览图
 			} else {
 				int color = mColorGenerator.getColor(data.get(position).title);
-				TextDrawable drawable = TextDrawable.builder().buildRound(data.get(position).title.substring(0, 1), color);
+				TextDrawable drawable = TextDrawable.builder().buildRect(data.get(position).title.substring(0, 1), color);
 				mHolder.mPreviewImageView.setImageDrawable(drawable);
 			}
 			mHolder.mPopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -87,6 +87,8 @@ public class BookListRecyclerAdapter extends AbsRecyclerViewAdapter {
 			mPopupWindow = new ListPopupWindow(getContext());
 			mPopupWindow.setAdapter(new PopupAdapter(getContext(), new String[] {"Details", "Download", "Add to favorites"}));
 			mPopupWindow.setAnchorView(mMenuButton);
+			mPopupWindow.setWidth(ListPopupWindow.WRAP_CONTENT);
+			mPopupWindow.setContentWidth(ListPopupWindow.WRAP_CONTENT);
 			mMenuButton.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
@@ -125,7 +127,7 @@ public class BookListRecyclerAdapter extends AbsRecyclerViewAdapter {
 			}
 
 			@Override
-			public View getView(final int position, View convertView, ViewGroup parent) {
+			public View getView(int position, View convertView, ViewGroup parent) {
 				MyViewHolder holder;
 				if (convertView == null) {
 					convertView = LayoutInflater.from(mContext).inflate(R.layout.list_item_menu_row, parent, false);
@@ -137,7 +139,7 @@ public class BookListRecyclerAdapter extends AbsRecyclerViewAdapter {
 					holder = (MyViewHolder) convertView.getTag();
 				}
 				if (holder.menuItemView != null) {
-					holder.menuItemView.setText(menuItems[position - 1]);
+					holder.menuItemView.setText(menuItems[position]);
 				}
 				return convertView;
 			}

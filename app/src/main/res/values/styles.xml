@@ -1,8 +1,11 @@
 <resources>
 
-	<!-- Base application theme. -->
-	<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar.NoActionBar">
-		<!-- Customize your theme here. -->
+	<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
+		<item name="colorPrimary">@color/sexy_purple_500</item>
+		<item name="colorPrimaryDark">@color/sexy_purple_800</item>
+		<item name="colorAccent">@color/sexy_purple_accent</item>
 	</style>
 
 </resources>

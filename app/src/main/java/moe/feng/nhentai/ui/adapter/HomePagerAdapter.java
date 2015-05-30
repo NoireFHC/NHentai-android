@@ -2,8 +2,10 @@ package moe.feng.nhentai.ui.adapter;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.support.v13.app.FragmentPagerAdapter;
 
+import moe.feng.nhentai.R;
 import moe.feng.nhentai.ui.fragment.DownloadManagerFragment;
 import moe.feng.nhentai.ui.fragment.FavoriteFragment;
 import moe.feng.nhentai.ui.fragment.HomeFragment;
@@ -14,16 +16,19 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
 	private DownloadManagerFragment downloadManagerFragment;
 	private FavoriteFragment favoriteFragment;
 
-	public HomePagerAdapter(FragmentManager fm) {
+	private String[] titles;
+
+	public HomePagerAdapter(Context context, FragmentManager fm) {
 		super(fm);
+		titles = context.getResources().getStringArray(R.array.page_titles);
 		homeFragment = new HomeFragment();
 		downloadManagerFragment = new DownloadManagerFragment();
 		favoriteFragment = new FavoriteFragment();
 	}
 
 	@Override
-	public Fragment getItem(int i) {
-		switch (i) {
+	public Fragment getItem(int position) {
+		switch (position) {
 			case 0:
 				return homeFragment;
 			case 1:
@@ -38,6 +43,11 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
 	@Override
 	public int getCount() {
 		return 3;
+	}
+
+	@Override
+	public CharSequence getPageTitle(int position) {
+		return titles[position];
 	}
 
 }

@@ -9,12 +9,14 @@
 		android:id="@+id/view_pager"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		app:viewpager_color="@color/colorPrimary"
+		app:viewpager_color="?attr/colorPrimary"
 		app:viewpager_hideLogoWithFade="false"
 		app:viewpager_hideToolbarAndTitle="false"
 		app:viewpager_enableToolbarElevation="true"
 		app:viewpager_parallaxHeaderFactor="1.5"
-		app:viewpager_headerAdditionalHeight="20dp"
+		app:viewpager_headerAdditionalHeight="50dp"
+	    app:viewpager_pagerTitleStrip="@layout/layout_pager_strip"
+	    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
 		/>
 
 </FrameLayout>
