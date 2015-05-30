@@ -57,9 +57,10 @@ public class DownloadManagerFragment extends Fragment {
 	}
 
 	private void setRecyclerViewAdapter(BookListRecyclerAdapter adapter) {
-		RecyclerViewMaterialAdapter materialAdapter = new RecyclerViewMaterialAdapter(adapter);
+		RecyclerViewMaterialAdapter materialAdapter = new RecyclerViewMaterialAdapter(new RecyclerViewMaterialAdapter(adapter));
 		mRecyclerView.setAdapter(materialAdapter);
 		MaterialViewPagerHelper.registerRecyclerView(getActivity(), mRecyclerView, null);
+		mRecyclerView.scrollToPosition(1);
 	}
 
 }
