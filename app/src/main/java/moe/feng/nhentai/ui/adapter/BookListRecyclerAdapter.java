@@ -51,6 +51,17 @@ public class BookListRecyclerAdapter extends AbsRecyclerViewAdapter {
 			String previewImageUrl = data.get(position).previewImageUrl;
 			if (previewImageUrl != null) {
 				// TODO 显示本子的预览图
+				switch (previewImageUrl) {
+					case "0":
+						mHolder.mPreviewImageView.setImageResource(R.drawable.holder_0);
+						break;
+					case "1":
+						mHolder.mPreviewImageView.setImageResource(R.drawable.holder_1);
+						break;
+					case "2":
+						mHolder.mPreviewImageView.setImageResource(R.drawable.holder_2);
+						break;
+				}
 			} else {
 				int color = mColorGenerator.getColor(data.get(position).title);
 				TextDrawable drawable = TextDrawable.builder().buildRect(data.get(position).title.substring(0, 1), color);

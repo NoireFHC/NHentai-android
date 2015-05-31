@@ -1,6 +1,11 @@
 <resources>
 
-	<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+	<style name="Base.Theme.NHBooks.Light" parent="Theme.AppCompat.Light.DarkActionBar">
+		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
+	</style>
+
+	<style name="Theme.NHBooks.Light" parent="Base.Theme.NHBooks.Light">
 		<item name="windowActionBar">false</item>
 		<item name="windowNoTitle">true</item>
 		<item name="colorPrimary">@color/sexy_purple_500</item>

@@ -35,9 +35,9 @@ public class FavoriteFragment extends Fragment {
 
 		/** 添加测试数据 */
 		ArrayList<Book> books = new ArrayList<>();
-		books.add(new Book("Test", "other", null));
-		books.add(new Book("Hello, world", "good", null));
-		books.add(new Book("Are you ok?", "3Q very match", null));
+		books.add(new Book("Test", "other", null, "0"));
+		books.add(new Book("Hello, world", "good", null, "1"));
+		books.add(new Book("Are you ok?", "3Q very match", null, "2"));
 
 		mAdapter = new BookListRecyclerAdapter(books);
 		mAdapter.setOnItemClickListener(new AbsRecyclerViewAdapter.OnItemClickListener() {
@@ -64,7 +64,7 @@ public class FavoriteFragment extends Fragment {
 				BookListRecyclerAdapter.ViewHolder holder = (BookListRecyclerAdapter.ViewHolder) viewHolder;
 				Log.i(TAG, "You clicked position no." + position + " item, " +
 						"its name is " + holder.mTitleTextView.getText().toString());
-				BookDetailsActivity.launch((AppCompatActivity) getActivity(), holder.mPreviewImageView, holder.book);
+				BookDetailsActivity.launch(getActivity(), holder.mPreviewImageView, holder.book);
 			}
 		});
 	}

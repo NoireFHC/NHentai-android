@@ -1,5 +1,6 @@
 package moe.feng.nhentai.ui;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -19,6 +20,10 @@ public class MainActivity extends AppCompatActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			getWindow().setStatusBarColor(getResources().getColor(R.color.sexy_purple_800));
+		}
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 

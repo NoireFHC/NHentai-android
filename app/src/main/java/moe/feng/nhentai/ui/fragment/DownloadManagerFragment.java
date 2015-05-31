@@ -2,7 +2,6 @@ package moe.feng.nhentai.ui.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -35,9 +34,9 @@ public class DownloadManagerFragment extends Fragment {
 
 		/** 添加测试数据 */
 		ArrayList<Book> books = new ArrayList<>();
-		books.add(new Book("Well", "Test", null));
-		books.add(new Book("Hentai", "Yes", null));
-		books.add(new Book("Loli is good!", "You are right.", null));
+		books.add(new Book("Well", "Test", null, "1"));
+		books.add(new Book("Hentai", "Yes", null, "0"));
+		books.add(new Book("Loli is good!", "You are right.", null, "1"));
 
 		mAdapter = new BookListRecyclerAdapter(books);
 		mAdapter.setOnItemClickListener(new AbsRecyclerViewAdapter.OnItemClickListener() {
@@ -64,7 +63,7 @@ public class DownloadManagerFragment extends Fragment {
 				BookListRecyclerAdapter.ViewHolder holder = (BookListRecyclerAdapter.ViewHolder) viewHolder;
 				Log.i(TAG, "You clicked position no." + position + " item, " +
 						"its name is " + holder.mTitleTextView.getText().toString());
-				BookDetailsActivity.launch((AppCompatActivity) getActivity(), holder.mPreviewImageView, holder.book);
+				BookDetailsActivity.launch(getActivity(), holder.mPreviewImageView, holder.book);
 			}
 		});
 	}
