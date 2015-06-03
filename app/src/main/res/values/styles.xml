@@ -5,7 +5,22 @@
 		<item name="windowNoTitle">true</item>
 	</style>
 
-	<style name="Theme.NHBooks.Light" parent="Base.Theme.NHBooks.Light">
+	<style name="Base.Theme.NHBooks.Dark" parent="Theme.AppCompat">
+		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
+	</style>
+
+	<style name="Theme.NHBooks.Light.DarkActionBar" parent="Base.Theme.NHBooks.Light">
+		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
+		<item name="colorPrimary">@color/sexy_purple_500</item>
+		<item name="colorPrimaryDark">@color/sexy_purple_800</item>
+		<item name="colorAccent">@color/sexy_purple_accent</item>
+		<item name="colorControlNormal">@android:color/white</item>
+		<item name="android:textColorPrimary">@android:color/white</item>
+	</style>
+
+	<style name="Theme.NHBooks.Dark" parent="Base.Theme.NHBooks.Dark">
 		<item name="windowActionBar">false</item>
 		<item name="windowNoTitle">true</item>
 		<item name="colorPrimary">@color/sexy_purple_500</item>
