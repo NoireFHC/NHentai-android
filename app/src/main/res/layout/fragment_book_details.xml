@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:paddingTop="24dp"
+              android:paddingLeft="16dp"
+              android:paddingRight="16dp"
+              android:paddingBottom="24dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/tv_other"
+        tools:text="Other"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Something places here...."
+        android:id="@+id/textView2"
+        android:layout_marginTop="5dp"/>
+
+    <android.support.v7.widget.AppCompatRatingBar
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:id="@+id/rating_bar"
+        android:layout_marginTop="5dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/black"
+        android:alpha="0.6f"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_article"
+        android:text="@string/text_placeholder"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/black"
+        android:alpha="0.6f"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/book_thumb_list"/>
+
+</LinearLayout>

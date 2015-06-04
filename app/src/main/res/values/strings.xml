@@ -13,4 +13,12 @@
         <item>@string/title_page_favorite</item>
     </string-array>
 
+    <string name="text_placeholder">"Available now!\n\nThe Design library is available now, so make sure to update the Android Support Repository in the SDK Manager. You can then start using the Design library
+with a single new dependency:\ncompile \'com.android.support:design:22.2.0\'
+\nNote that as the Design library depends on the Support v4 and AppCompat Support Libraries, those will be included automatically when you add the Design
+library dependency. We also took care that these new widgets are usable in the Android Studio Layout Editor\’s Design view (find them under CustomView),
+giving you an easier way to preview some of these new components.
+The Design library, AppCompat, and all of the Android Support Library are important tools in providing the building blocks needed to build a modern, great
+looking Android app without building everything from scratch."</string>
+
 </resources>

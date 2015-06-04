@@ -21,7 +21,7 @@ public class GalleryActivity extends AppCompatActivity {
 	private ViewPager mPager;
 	private GalleryPagerAdapter mPagerAdpater;
 
-	private static final String EXTRA_BOOK_DATA = "book_data";
+	private static final String EXTRA_BOOK_DATA = "book_data", EXTRA_FISRT_PAGE = "first_page";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +38,7 @@ public class GalleryActivity extends AppCompatActivity {
 		mPager = (ViewPager) findViewById(R.id.pager);
 		mPagerAdpater = new GalleryPagerAdapter(getFragmentManager(), book);
 		mPager.setAdapter(mPagerAdpater);
+		mPager.setCurrentItem(intent.getIntExtra(EXTRA_FISRT_PAGE, 0), false);
 	}
 
 	@Override
@@ -50,10 +51,11 @@ public class GalleryActivity extends AppCompatActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	public static void launch(Activity activity, Book book) {
+	public static void launch(Activity activity, Book book, int firstPageNum) {
 		Intent intent = new Intent(activity, GalleryActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 		intent.putExtra(EXTRA_BOOK_DATA, book.toJSONString());
+		intent.putExtra(EXTRA_FISRT_PAGE, firstPageNum);
 		activity.startActivity(intent);
 	}
 

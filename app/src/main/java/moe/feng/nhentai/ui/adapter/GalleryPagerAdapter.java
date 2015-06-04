@@ -15,7 +15,7 @@ public class GalleryPagerAdapter extends FragmentPagerAdapter {
 	public GalleryPagerAdapter(FragmentManager fm, Book book) {
 		super(fm);
 		this.book = book;
-		this.fragments = new Fragment[book.bookImageOriginUrl.length];
+		this.fragments = new Fragment[book.bookImageOriginUrl.size()];
 	}
 
 	@Override
@@ -28,7 +28,7 @@ public class GalleryPagerAdapter extends FragmentPagerAdapter {
 
 	@Override
 	public int getCount() {
-		return book.bookImageOriginUrl.length;
+		return book.bookImageOriginUrl.size();
 	}
 
 }

@@ -61,6 +61,8 @@ public class BookListRecyclerAdapter extends AbsRecyclerViewAdapter {
 					case "2":
 						mHolder.mPreviewImageView.setImageResource(R.drawable.holder_2);
 						break;
+					default:
+						// TODO 找不到缓存，从网络中抽取数据
 				}
 			} else {
 				int color = mColorGenerator.getColor(data.get(position).title);

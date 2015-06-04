@@ -2,6 +2,8 @@ package moe.feng.nhentai.model;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+
 public class Book {
 
 	/** 必须获取到的数据 */
@@ -10,15 +12,15 @@ public class Book {
 	/** 次要数据 */
 	public String previewImageUrl;
 
-	public String[] bookImageThumbUrl;
-	public String[] bookImageOriginUrl;
+	public ArrayList<String> bookImageThumbUrl;
+	public ArrayList<String> bookImageOriginUrl;
 
 	public Book(String title, String other, String bookId) {
 		this.title = title;
 		this.other = other;
 		this.bookId = bookId;
-		this.bookImageThumbUrl = new String[0];
-		this.bookImageOriginUrl = new String[0];
+		this.bookImageThumbUrl = new ArrayList<>();
+		this.bookImageOriginUrl = new ArrayList<>();
 	}
 
 	public Book(String title, String other, String bookId, String previewImageUrl) {

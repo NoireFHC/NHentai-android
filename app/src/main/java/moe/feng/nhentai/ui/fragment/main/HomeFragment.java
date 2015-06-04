@@ -1,4 +1,4 @@
-package moe.feng.nhentai.ui.fragment;
+package moe.feng.nhentai.ui.fragment.main;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -34,7 +34,14 @@ public class HomeFragment extends Fragment {
 
 		/** 添加测试数据 */
 		ArrayList<Book> books = new ArrayList<>();
-		books.add(new Book("Test", "other", null, "0"));
+		Book sampleBook = new Book("Test", "other", null, "0");
+		sampleBook.bookImageThumbUrl.add("0");
+		sampleBook.bookImageThumbUrl.add("1");
+		sampleBook.bookImageThumbUrl.add("2");
+		sampleBook.bookImageThumbUrl.add("0");
+		sampleBook.bookImageThumbUrl.add("1");
+		sampleBook.bookImageThumbUrl.add("1");
+		books.add(sampleBook);
 		books.add(new Book("Hello, world", "good", null, "1"));
 		books.add(new Book("Are you ok?", "3Q very match", null, "2"));
 		books.add(new Book("Well", "Test", null, "1"));

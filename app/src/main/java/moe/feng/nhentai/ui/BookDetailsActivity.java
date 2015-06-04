@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 
 import moe.feng.nhentai.R;
 import moe.feng.nhentai.model.Book;
+import moe.feng.nhentai.ui.fragment.BookDetailsFragment;
 import moe.feng.nhentai.util.ColorGenerator;
 import moe.feng.nhentai.util.TextDrawable;
 
@@ -47,34 +48,33 @@ public class BookDetailsActivity extends AppCompatActivity {
 		imageView = (ImageView) findViewById(R.id.app_bar_background);
 		ViewCompat.setTransitionName(imageView, TRANSITION_NAME_IMAGE);
 
-		new Handler().postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						if (book.previewImageUrl != null) {
-							// TODO 显示本子的预览图
-							switch (book.previewImageUrl) {
-								case "0":
-									imageView.setImageResource(R.drawable.holder_0);
-									break;
-								case "1":
-									imageView.setImageResource(R.drawable.holder_1);
-									break;
-								case "2":
-									imageView.setImageResource(R.drawable.holder_2);
-									break;
-							}
-						} else {
-							int color = ColorGenerator.MATERIAL.getColor(book.title);
-							TextDrawable drawable = TextDrawable.builder().buildRect(book.title.substring(0, 1), color);
-							imageView.setImageDrawable(drawable);
-						}
-					}
-				});
+		if (book.previewImageUrl != null) {
+			// TODO 显示本子的预览图
+			switch (book.previewImageUrl) {
+				case "0":
+					// 假缓存
+					imageView.setImageResource(R.drawable.holder_0);
+					break;
+				case "1":
+					// 假缓存
+					imageView.setImageResource(R.drawable.holder_1);
+					break;
+				case "2":
+					// 假缓存
+					imageView.setImageResource(R.drawable.holder_2);
+					break;
+				default:
+					// TODO 找不到缓存，从网络中抽取数据
 			}
-		}, 1000);
+		} else {
+			int color = ColorGenerator.MATERIAL.getColor(book.title);
+			TextDrawable drawable = TextDrawable.builder().buildRect(book.title.substring(0, 1), color);
+			imageView.setImageDrawable(drawable);
+		}
+
+		getFragmentManager().beginTransaction()
+				.replace(R.id.book_details_container, BookDetailsFragment.newInstance(book))
+				.commit();
 	}
 
 	public static void launch(Activity activity, ImageView imageView, Book book) {

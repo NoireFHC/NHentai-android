@@ -6,9 +6,9 @@ import android.content.Context;
 import android.support.v13.app.FragmentPagerAdapter;
 
 import moe.feng.nhentai.R;
-import moe.feng.nhentai.ui.fragment.DownloadManagerFragment;
-import moe.feng.nhentai.ui.fragment.FavoriteFragment;
-import moe.feng.nhentai.ui.fragment.HomeFragment;
+import moe.feng.nhentai.ui.fragment.main.DownloadManagerFragment;
+import moe.feng.nhentai.ui.fragment.main.FavoriteFragment;
+import moe.feng.nhentai.ui.fragment.main.HomeFragment;
 
 public class HomePagerAdapter extends FragmentPagerAdapter {
 

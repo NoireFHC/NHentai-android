@@ -1,4 +1,4 @@
-package moe.feng.nhentai.ui.fragment;
+package moe.feng.nhentai.ui.fragment.main;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -17,12 +17,12 @@ import moe.feng.nhentai.ui.BookDetailsActivity;
 import moe.feng.nhentai.ui.adapter.BookListRecyclerAdapter;
 import moe.feng.nhentai.ui.common.AbsRecyclerViewAdapter;
 
-public class DownloadManagerFragment extends Fragment {
+public class FavoriteFragment extends Fragment {
 
 	private RecyclerView mRecyclerView;
 	private BookListRecyclerAdapter mAdapter;
 
-	public static final String TAG = DownloadManagerFragment.class.getSimpleName();
+	public static final String TAG = FavoriteFragment.class.getSimpleName();
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle state) {
@@ -34,9 +34,9 @@ public class DownloadManagerFragment extends Fragment {
 
 		/** 添加测试数据 */
 		ArrayList<Book> books = new ArrayList<>();
-		books.add(new Book("Well", "Test", null, "1"));
-		books.add(new Book("Hentai", "Yes", null, "0"));
-		books.add(new Book("Loli is good!", "You are right.", null, "1"));
+		books.add(new Book("Test", "other", null, "0"));
+		books.add(new Book("Hello, world", "good", null, "1"));
+		books.add(new Book("Are you ok?", "3Q very match", null, "2"));
 
 		mAdapter = new BookListRecyclerAdapter(books);
 		mAdapter.setOnItemClickListener(new AbsRecyclerViewAdapter.OnItemClickListener() {
