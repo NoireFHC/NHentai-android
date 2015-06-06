@@ -2,6 +2,7 @@ package moe.feng.nhentai.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -52,8 +53,8 @@ public class BookDetailsActivity extends AppCompatActivity {
 		ViewCompat.setTransitionName(imageView, TRANSITION_NAME_IMAGE);
 
 		if (book.previewImageUrl != null) {
-			// TODO 显示本子的预览图
-			switch (book.previewImageUrl) {
+			// TODO Image should be loaded here but we are now in development state.
+			/*switch (book.previewImageUrl) {
 				case "0":
 					// 假缓存
 					imageView.setImageResource(R.drawable.holder_0);
@@ -68,7 +69,7 @@ public class BookDetailsActivity extends AppCompatActivity {
 					break;
 				default:
 					// TODO 找不到缓存，从网络中抽取数据
-			}
+			}*/
 		} else {
 			int color = ColorGenerator.MATERIAL.getColor(book.title);
 			TextDrawable drawable = TextDrawable.builder().buildRect(book.title.substring(0, 1), color);
@@ -96,6 +97,8 @@ public class BookDetailsActivity extends AppCompatActivity {
 		collapsingToolbar.invalidate();
 		findViewById(R.id.toolbar).invalidate();
 		findViewById(R.id.appbar).invalidate();
+		
+		new CoverTask().execute(book);
 	}
 
 	@Override
@@ -121,6 +124,19 @@ public class BookDetailsActivity extends AppCompatActivity {
 			updateUIContent();
 		}
 
+	}
+	
+	private class CoverTask extends AsyncTask<Book, Void, Bitmap> {
+
+		@Override
+		protected Bitmap doInBackground(Book... params) {
+			return BookApi.getCover(BookDetailsActivity.this, params[0]);
+		}
+
+		@Override
+		protected void onPostExecute(Bitmap result) {
+			imageView.setImageBitmap(result);
+		}
 	}
 
 }

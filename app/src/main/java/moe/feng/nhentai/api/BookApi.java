@@ -1,5 +1,7 @@
 package moe.feng.nhentai.api;
 
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import org.jsoup.Jsoup;
@@ -10,7 +12,9 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 
 import moe.feng.nhentai.api.common.Constants;
+import moe.feng.nhentai.cache.file.FileCacheManager;
 import moe.feng.nhentai.model.Book;
+import static moe.feng.nhentai.cache.common.Constants.CACHE_COVER;
 
 public class BookApi {
 
@@ -75,6 +79,17 @@ public class BookApi {
 		Log.i(TAG, book.toJSONString());
 
 		return book;
+	}
+	
+	public static Bitmap getCover(Context context, Book book) {
+		String url = book.bigCoverImageUrl;
+		FileCacheManager m = FileCacheManager.getInstance(context);
+		
+		if (!m.cacheExistsUrl(CACHE_COVER, url) && !m.createCacheFromNetwork(CACHE_COVER, url)) {
+			return null;
+		}
+		
+		return m.getBitmapUrl(CACHE_COVER, url);
 	}
 
 }

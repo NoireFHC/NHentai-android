@@ -38,7 +38,8 @@ public class Constants {
 	}
 
 	public static String getBigCoverUrl(String g_id) {
-		return getPictureUrl(g_id, "cover", "jpg");
+		// TODO Not all covers are pngs
+		return getPictureUrl(g_id, "cover", "png");
 	}
 
 	public static String getPictureUrl(String g_id, String page_num, String file_type) {
