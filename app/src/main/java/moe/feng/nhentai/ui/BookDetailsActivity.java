@@ -3,7 +3,6 @@ package moe.feng.nhentai.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.ActivityCompat;
@@ -20,6 +19,7 @@ import moe.feng.nhentai.R;
 import moe.feng.nhentai.api.BookApi;
 import moe.feng.nhentai.model.Book;
 import moe.feng.nhentai.ui.fragment.BookDetailsFragment;
+import moe.feng.nhentai.util.AsyncTask;
 import moe.feng.nhentai.util.ColorGenerator;
 import moe.feng.nhentai.util.TextDrawable;
 
