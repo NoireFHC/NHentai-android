@@ -28,4 +28,5 @@ dependencies {
 	compile 'com.android.support:recyclerview-v7:22.2.0'
 	compile 'com.google.code.gson:gson:2.3.1'
 	compile 'org.jsoup:jsoup:1.8.2'
+	compile 'com.squareup.picasso:picasso:2.5.2'
 }

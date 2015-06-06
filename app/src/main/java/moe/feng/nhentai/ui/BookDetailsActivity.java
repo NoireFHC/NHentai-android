@@ -2,8 +2,9 @@ package moe.feng.nhentai.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -14,8 +15,10 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
 import moe.feng.nhentai.R;
+import moe.feng.nhentai.api.BookApi;
 import moe.feng.nhentai.model.Book;
 import moe.feng.nhentai.ui.fragment.BookDetailsFragment;
 import moe.feng.nhentai.util.ColorGenerator;
@@ -24,6 +27,7 @@ import moe.feng.nhentai.util.TextDrawable;
 public class BookDetailsActivity extends AppCompatActivity {
 
 	private ImageView imageView;
+	private CollapsingToolbarLayout collapsingToolbar;
 
 	private Book book;
 
@@ -42,7 +46,7 @@ public class BookDetailsActivity extends AppCompatActivity {
 		setSupportActionBar(toolbar);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-		CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+		collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
 		collapsingToolbar.setTitle(book.title);
 
 		imageView = (ImageView) findViewById(R.id.app_bar_background);
@@ -75,6 +79,8 @@ public class BookDetailsActivity extends AppCompatActivity {
 		getFragmentManager().beginTransaction()
 				.replace(R.id.book_details_container, BookDetailsFragment.newInstance(book))
 				.commit();
+
+		new BookGetTask().execute("80150");
 	}
 
 	public static void launch(Activity activity, ImageView imageView, Book book) {
@@ -86,6 +92,12 @@ public class BookDetailsActivity extends AppCompatActivity {
 		ActivityCompat.startActivity(activity, intent, options.toBundle());
 	}
 
+	private void updateUIContent() {
+		Picasso.with(getApplicationContext()).load(Uri.parse(book.bigCoverImageUrl))
+				.into(imageView);
+		collapsingToolbar.setTitle(book.title);
+	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
@@ -94,6 +106,21 @@ public class BookDetailsActivity extends AppCompatActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	public class BookGetTask extends AsyncTask<String, Void, Book> {
+
+		@Override
+		protected Book doInBackground(String... params) {
+			return BookApi.getBook(params[0]);
+		}
+
+		@Override
+		protected void onPostExecute(Book result) {
+			book = result;
+			updateUIContent();
+		}
+
 	}
 
 }

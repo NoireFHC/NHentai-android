@@ -10,10 +10,15 @@ public class Book {
 	public String title, other, bookId;
 
 	/** 次要数据 */
-	public String previewImageUrl;
+	public String previewImageUrl, bigCoverImageUrl, titleJP, galleryId;
+	public int pageCount;
 
 	public ArrayList<String> bookImageThumbUrl;
 	public ArrayList<String> bookImageOriginUrl;
+
+	public Book() {
+		this(null, null, null);
+	}
 
 	public Book(String title, String other, String bookId) {
 		this.title = title;

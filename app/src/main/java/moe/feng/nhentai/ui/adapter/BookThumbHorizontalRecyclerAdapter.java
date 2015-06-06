@@ -34,7 +34,7 @@ public class BookThumbHorizontalRecyclerAdapter extends AbsRecyclerViewAdapter {
 			mHolder.mNumberText.setText(position);
 			try {
 				String url = book.bookImageThumbUrl.get(position);
-				// TODO 显示本子的预览图
+				// TODO Show preview
 				switch (url) {
 					case "0":
 						mHolder.mImageView.setImageResource(R.drawable.holder_0);
@@ -46,7 +46,7 @@ public class BookThumbHorizontalRecyclerAdapter extends AbsRecyclerViewAdapter {
 						mHolder.mImageView.setImageResource(R.drawable.holder_2);
 						break;
 					default:
-						// TODO 找不到缓存，从网络中抽取数据
+						// TODO Cannot find cache
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
