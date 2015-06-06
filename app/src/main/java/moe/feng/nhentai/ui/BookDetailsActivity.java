@@ -46,7 +46,7 @@ public class BookDetailsActivity extends AppCompatActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-		collapsingToolbar.setTitle(book.title);
+		//collapsingToolbar.setTitle(book.title);
 
 		imageView = (ImageView) findViewById(R.id.app_bar_background);
 		ViewCompat.setTransitionName(imageView, TRANSITION_NAME_IMAGE);
@@ -93,6 +93,9 @@ public class BookDetailsActivity extends AppCompatActivity {
 
 	private void updateUIContent() {
 		collapsingToolbar.setTitle(book.title);
+		collapsingToolbar.invalidate();
+		findViewById(R.id.toolbar).invalidate();
+		findViewById(R.id.appbar).invalidate();
 	}
 
 	@Override
