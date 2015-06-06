@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.google.gson.Gson;
-import com.squareup.picasso.Picasso;
 
 import moe.feng.nhentai.R;
 import moe.feng.nhentai.api.BookApi;
@@ -93,8 +92,6 @@ public class BookDetailsActivity extends AppCompatActivity {
 	}
 
 	private void updateUIContent() {
-		Picasso.with(getApplicationContext()).load(Uri.parse(book.bigCoverImageUrl))
-				.into(imageView);
 		collapsingToolbar.setTitle(book.title);
 	}
 
