@@ -85,6 +85,17 @@ public class BookListRecyclerAdapter extends AbsRecyclerViewAdapter {
 	}
 
 	@Override
+	public void onViewRecycled(ClickableViewHolder holder) {
+		super.onViewRecycled(holder);
+		
+		if (holder instanceof ViewHolder) {
+			ViewHolder h = (ViewHolder) holder;
+			h.mPreviewImageView.setImageBitmap(null);
+			h.mPreviewImageView.setVisibility(View.GONE);
+		}
+	}
+	
+	@Override
 	public void onBindViewHolder(ClickableViewHolder holder, int position) {
 		super.onBindViewHolder(holder, position);
 		if (holder instanceof ViewHolder) {
@@ -179,7 +190,7 @@ public class BookListRecyclerAdapter extends AbsRecyclerViewAdapter {
 
 			Bitmap img = (Bitmap) values[1];
 			ImageView iv = (ImageView) values[2];
-			iv.setAlpha(1.0f);
+			iv.setVisibility(View.VISIBLE);
 			iv.setImageBitmap(img);
 			iv.setTag(false);
 		}
