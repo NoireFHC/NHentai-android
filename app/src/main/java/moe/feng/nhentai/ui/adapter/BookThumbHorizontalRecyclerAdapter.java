@@ -1,5 +1,6 @@
 package moe.feng.nhentai.ui.adapter;
 
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +15,8 @@ public class BookThumbHorizontalRecyclerAdapter extends AbsRecyclerViewAdapter {
 
 	private Book book;
 
-	public BookThumbHorizontalRecyclerAdapter(Book book) {
-		super();
+	public BookThumbHorizontalRecyclerAdapter(RecyclerView recyclerView, Book book) {
+		super(recyclerView);
 		this.book = book;
 	}
 

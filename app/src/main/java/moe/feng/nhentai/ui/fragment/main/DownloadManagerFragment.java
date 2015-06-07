@@ -38,7 +38,7 @@ public class DownloadManagerFragment extends Fragment {
 		books.add(new Book("Hentai", "Yes", null, "0"));
 		books.add(new Book("Loli is good!", "You are right.", null, "1"));
 
-		mAdapter = new BookListRecyclerAdapter(books);
+		mAdapter = new BookListRecyclerAdapter(mRecyclerView, books);
 		mAdapter.setOnItemClickListener(new AbsRecyclerViewAdapter.OnItemClickListener() {
 			@Override
 			public void onItemClick(int position, AbsRecyclerViewAdapter.ClickableViewHolder viewHolder) {

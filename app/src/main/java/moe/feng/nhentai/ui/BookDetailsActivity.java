@@ -3,7 +3,6 @@ package moe.feng.nhentai.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.ActivityCompat;
@@ -18,6 +17,8 @@ import com.google.gson.Gson;
 
 import moe.feng.nhentai.R;
 import moe.feng.nhentai.api.BookApi;
+import moe.feng.nhentai.cache.common.Constants;
+import moe.feng.nhentai.cache.file.FileCacheManager;
 import moe.feng.nhentai.model.Book;
 import moe.feng.nhentai.ui.fragment.BookDetailsFragment;
 import moe.feng.nhentai.util.AsyncTask;
@@ -52,35 +53,23 @@ public class BookDetailsActivity extends AppCompatActivity {
 		imageView = (ImageView) findViewById(R.id.app_bar_background);
 		ViewCompat.setTransitionName(imageView, TRANSITION_NAME_IMAGE);
 
-		if (book.previewImageUrl != null) {
-			// TODO Image should be loaded here but we are now in development state.
-			/*switch (book.previewImageUrl) {
-				case "0":
-					// 假缓存
-					imageView.setImageResource(R.drawable.holder_0);
-					break;
-				case "1":
-					// 假缓存
-					imageView.setImageResource(R.drawable.holder_1);
-					break;
-				case "2":
-					// 假缓存
-					imageView.setImageResource(R.drawable.holder_2);
-					break;
-				default:
-					// TODO 找不到缓存，从网络中抽取数据
-			}*/
+		FileCacheManager cm = FileCacheManager.getInstance(getApplicationContext());
+		if (cm.cacheExistsUrl(Constants.CACHE_THUMB, book.previewImageUrl)) {
+			imageView.setImageBitmap(cm.getBitmapUrl(Constants.CACHE_THUMB, book.previewImageUrl));
 		} else {
 			int color = ColorGenerator.MATERIAL.getColor(book.title);
 			TextDrawable drawable = TextDrawable.builder().buildRect(book.title.substring(0, 1), color);
 			imageView.setImageDrawable(drawable);
+		}
+		if (cm.cacheExistsUrl(Constants.CACHE_COVER, book.bigCoverImageUrl)) {
+			imageView.setImageBitmap(cm.getBitmapUrl(Constants.CACHE_COVER, book.bigCoverImageUrl));
 		}
 
 		getFragmentManager().beginTransaction()
 				.replace(R.id.book_details_container, BookDetailsFragment.newInstance(book))
 				.commit();
 
-		new BookGetTask().execute("80150");
+		new BookGetTask().execute(book.bookId);
 	}
 
 	public static void launch(Activity activity, ImageView imageView, Book book) {
@@ -97,7 +86,7 @@ public class BookDetailsActivity extends AppCompatActivity {
 		collapsingToolbar.invalidate();
 		findViewById(R.id.toolbar).invalidate();
 		findViewById(R.id.appbar).invalidate();
-		
+
 		new CoverTask().execute(book);
 	}
 
@@ -111,7 +100,7 @@ public class BookDetailsActivity extends AppCompatActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	public class BookGetTask extends AsyncTask<String, Void, Book> {
+	private class BookGetTask extends AsyncTask<String, Void, Book> {
 
 		@Override
 		protected Book doInBackground(String... params) {

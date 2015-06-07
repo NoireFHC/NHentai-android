@@ -1,6 +1,6 @@
 package moe.feng.nhentai.api.common;
 
-public class Constants {
+public class NHentaiUrl {
 
 	public static final String NHENTAI_HOME = "http://nhentai.net";
 	public static final String NHENTAI_I = "http://i.nhentai.net";
@@ -38,8 +38,8 @@ public class Constants {
 	}
 
 	public static String getBigCoverUrl(String g_id) {
-		// TODO Not all covers are pngs
-		return getPictureUrl(g_id, "cover", "png");
+		// TODO Not all covers are jpgs
+		return getPictureUrl(g_id, "cover", "jpg");
 	}
 
 	public static String getPictureUrl(String g_id, String page_num, String file_type) {
@@ -92,6 +92,10 @@ public class Constants {
 			targetName = targetName.replaceAll(" ", "+");
 		}
 		return NHENTAI_HOME + "/language/" + targetName;
+	}
+
+	public static String getHomePageUrl(int page) {
+		return NHENTAI_HOME + "/?page=" + page;
 	}
 
 }

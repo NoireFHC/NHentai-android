@@ -12,15 +12,19 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import moe.feng.nhentai.R;
+import moe.feng.nhentai.api.PageApi;
 import moe.feng.nhentai.model.Book;
 import moe.feng.nhentai.ui.BookDetailsActivity;
 import moe.feng.nhentai.ui.adapter.BookListRecyclerAdapter;
 import moe.feng.nhentai.ui.common.AbsRecyclerViewAdapter;
+import moe.feng.nhentai.util.AsyncTask;
 
 public class HomeFragment extends Fragment {
 
 	private RecyclerView mRecyclerView;
 	private BookListRecyclerAdapter mAdapter;
+
+	private ArrayList<Book> mBooks;
 
 	public static final String TAG = HomeFragment.class.getSimpleName();
 
@@ -32,25 +36,11 @@ public class HomeFragment extends Fragment {
 		mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 		mRecyclerView.setHasFixedSize(false);
 
-		/** 添加测试数据 */
-		ArrayList<Book> books = new ArrayList<>();
-		Book sampleBook = new Book("Test", "other", null, "0");
-		sampleBook.bookImageThumbUrl.add("0");
-		sampleBook.bookImageThumbUrl.add("1");
-		sampleBook.bookImageThumbUrl.add("2");
-		sampleBook.bookImageThumbUrl.add("0");
-		sampleBook.bookImageThumbUrl.add("1");
-		sampleBook.bookImageThumbUrl.add("1");
-		books.add(sampleBook);
-		books.add(new Book("Hello, world", "good", null, "1"));
-		books.add(new Book("Are you ok?", "3Q very match", null, "2"));
-		books.add(new Book("Well", "Test", null, "1"));
-		books.add(new Book("1231241241", "Good", null, "2"));
-		books.add(new Book("Hentai", "Yes", null, "0"));
-		books.add(new Book("Loli is good!", "You are right.", null, "1"));
-
-		mAdapter = new BookListRecyclerAdapter(books);
+		mBooks = new ArrayList<>();
+		mAdapter = new BookListRecyclerAdapter(mRecyclerView, mBooks);
 		setRecyclerViewAdapter(mAdapter);
+
+		new PageGetTask().execute(1);
 
 		return view;
 	}
@@ -66,6 +56,27 @@ public class HomeFragment extends Fragment {
 			}
 		});
 		mRecyclerView.setAdapter(adapter);
+	}
+
+	private class PageGetTask extends AsyncTask<Integer, Void, ArrayList<Book>> {
+
+		@Override
+		protected ArrayList<Book> doInBackground(Integer... params) {
+			return PageApi.getHomePageList(params[0]);
+		}
+
+		@Override
+		protected void onPostExecute(ArrayList<Book> newData) {
+			if (newData != null) {
+				if (!newData.isEmpty()) {
+					mBooks.addAll(newData);
+					mAdapter.notifyDataSetChanged();
+				} else {
+
+				}
+			}
+		}
+
 	}
 
 }

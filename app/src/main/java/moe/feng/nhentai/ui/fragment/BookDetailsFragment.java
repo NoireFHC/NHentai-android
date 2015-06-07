@@ -26,8 +26,7 @@ public class BookDetailsFragment extends Fragment {
 
 	private Book book;
 
-	private TextView mOtherText, mArticleText;
-	private AppCompatRatingBar mRatingBar;
+	private TextView mOtherText;
 	private RecyclerView mRecyclerView;
 
 	private static final String ARG_BOOK_DATA = "book_data";
@@ -49,8 +48,6 @@ public class BookDetailsFragment extends Fragment {
 		book = new Gson().fromJson(getArguments().getString(ARG_BOOK_DATA), Book.class);
 
 		mOtherText = (TextView) view.findViewById(R.id.tv_other);
-		mArticleText = (TextView) view.findViewById(R.id.tv_article);
-		mRatingBar = (AppCompatRatingBar) view.findViewById(R.id.rating_bar);
 		mRecyclerView = (RecyclerView) view.findViewById(R.id.book_thumb_list);
 
 		mOtherText.setText(book.other);
@@ -58,7 +55,7 @@ public class BookDetailsFragment extends Fragment {
 		mRecyclerView.setHasFixedSize(true);
 		mRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 2, LinearLayoutManager.HORIZONTAL, false));
 
-		BookThumbHorizontalRecyclerAdapter adapter = new BookThumbHorizontalRecyclerAdapter(book);
+		BookThumbHorizontalRecyclerAdapter adapter = new BookThumbHorizontalRecyclerAdapter(mRecyclerView, book);
 		adapter.setOnItemClickListener(new AbsRecyclerViewAdapter.OnItemClickListener() {
 			@Override
 			public void onItemClick(int position, AbsRecyclerViewAdapter.ClickableViewHolder holder) {
@@ -66,7 +63,6 @@ public class BookDetailsFragment extends Fragment {
 			}
 		});
 		mRecyclerView.setAdapter(adapter);
-
 
 		return view;
 	}

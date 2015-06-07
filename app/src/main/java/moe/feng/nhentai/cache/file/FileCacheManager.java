@@ -158,6 +158,7 @@ public class FileCacheManager
 	}
 	
 	private String getCachePath(String type, String name) {
-		return mCacheDir.getAbsolutePath() + "/" + type + "/" + name;
+		return mCacheDir.getAbsolutePath() + "/" + type + "/" + name + ".cache";
 	}
+
 }

@@ -24,33 +24,13 @@
         android:id="@+id/textView2"
         android:layout_marginTop="5dp"/>
 
-    <android.support.v7.widget.AppCompatRatingBar
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:id="@+id/rating_bar"
-        android:layout_marginTop="5dp"/>
-
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@android:color/black"
-        android:alpha="0.6"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_article"
-        android:text="@string/text_placeholder"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/black"
-        android:alpha="0.6"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"/>
+        android:alpha="0.3"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"/>
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"

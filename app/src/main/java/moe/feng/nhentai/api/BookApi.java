@@ -11,17 +11,18 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
-import moe.feng.nhentai.api.common.Constants;
+import moe.feng.nhentai.api.common.NHentaiUrl;
 import moe.feng.nhentai.cache.file.FileCacheManager;
 import moe.feng.nhentai.model.Book;
 import static moe.feng.nhentai.cache.common.Constants.CACHE_COVER;
+import static moe.feng.nhentai.cache.common.Constants.CACHE_THUMB;
 
 public class BookApi {
 
 	public static final String TAG = BookApi.class.getSimpleName();
 
 	public static Book getBook(String id) {
-		String url = Constants.getBookDetailsUrl(id);
+		String url = NHentaiUrl.getBookDetailsUrl(id);
 
 		Document doc;
 		try {
@@ -68,8 +69,8 @@ public class BookApi {
 				coverUrl = coverUrl.substring(0, coverUrl.lastIndexOf("/"));
 				String galleryId = coverUrl.substring(coverUrl.lastIndexOf("/") + 1, coverUrl.length());
 				book.galleryId = galleryId;
-				book.previewImageUrl = Constants.getThumbUrl(galleryId);
-				book.bigCoverImageUrl = Constants.getBigCoverUrl(galleryId);
+				book.previewImageUrl = NHentaiUrl.getThumbUrl(galleryId);
+				book.bigCoverImageUrl = NHentaiUrl.getBigCoverUrl(galleryId);
 				break;
 			} catch (Exception ex) {
 				ex.printStackTrace();
@@ -90,6 +91,17 @@ public class BookApi {
 		}
 		
 		return m.getBitmapUrl(CACHE_COVER, url);
+	}
+
+	public static Bitmap getThumb(Context context, Book book) {
+		String url = book.previewImageUrl;
+		FileCacheManager m = FileCacheManager.getInstance(context);
+
+		if (!m.cacheExistsUrl(CACHE_THUMB, url) && !m.createCacheFromNetwork(CACHE_THUMB, url)) {
+			return null;
+		}
+
+		return m.getBitmapUrl(CACHE_THUMB, url);
 	}
 
 }

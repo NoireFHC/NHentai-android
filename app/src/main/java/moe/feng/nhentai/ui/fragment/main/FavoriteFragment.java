@@ -34,11 +34,19 @@ public class FavoriteFragment extends Fragment {
 
 		/** 添加测试数据 */
 		ArrayList<Book> books = new ArrayList<>();
+		Book sampleBook = new Book("Test", "other", null, "0");
+		sampleBook.bookImageThumbUrl.add("0");
+		sampleBook.bookImageThumbUrl.add("1");
+		sampleBook.bookImageThumbUrl.add("2");
+		sampleBook.bookImageThumbUrl.add("0");
+		sampleBook.bookImageThumbUrl.add("1");
+		sampleBook.bookImageThumbUrl.add("1");
+		books.add(sampleBook);
 		books.add(new Book("Test", "other", null, "0"));
 		books.add(new Book("Hello, world", "good", null, "1"));
 		books.add(new Book("Are you ok?", "3Q very match", null, "2"));
 
-		mAdapter = new BookListRecyclerAdapter(books);
+		mAdapter = new BookListRecyclerAdapter(mRecyclerView, books);
 		mAdapter.setOnItemClickListener(new AbsRecyclerViewAdapter.OnItemClickListener() {
 			@Override
 			public void onItemClick(int position, AbsRecyclerViewAdapter.ClickableViewHolder viewHolder) {

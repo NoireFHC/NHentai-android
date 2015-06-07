@@ -1,7 +1,12 @@
 package moe.feng.nhentai.ui.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.ListPopupWindow;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +20,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import moe.feng.nhentai.R;
+import moe.feng.nhentai.api.BookApi;
 import moe.feng.nhentai.model.Book;
 import moe.feng.nhentai.ui.common.AbsRecyclerViewAdapter;
+import moe.feng.nhentai.util.AsyncTask;
 import moe.feng.nhentai.util.ColorGenerator;
 import moe.feng.nhentai.util.TextDrawable;
 
@@ -26,12 +33,48 @@ public class BookListRecyclerAdapter extends AbsRecyclerViewAdapter {
 
 	private ColorGenerator mColorGenerator;
 
+	private boolean mScrolling = false;
+
 	public static final String TAG = BookListRecyclerAdapter.class.getSimpleName();
 
-	public BookListRecyclerAdapter(ArrayList<Book> data) {
-		super();
+	public BookListRecyclerAdapter(RecyclerView recyclerView, ArrayList<Book> data) {
+		super(recyclerView);
 		this.data = data;
 		mColorGenerator = ColorGenerator.MATERIAL;
+		this.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+			@Override
+			public void onScrollStateChanged(RecyclerView v, int state) {
+				mScrolling = state != RecyclerView.SCROLL_STATE_IDLE;
+
+				if (!mScrolling) {
+					RecyclerView.LayoutManager manager = v.getLayoutManager();
+
+					int from = -1;
+					int to = -1;
+					if (manager instanceof LinearLayoutManager) {
+						LinearLayoutManager lm = (LinearLayoutManager) manager;
+						from = lm.findFirstVisibleItemPosition();
+						to = lm.findLastVisibleItemPosition();
+					} else if (manager instanceof StaggeredGridLayoutManager) {
+						StaggeredGridLayoutManager sgm = (StaggeredGridLayoutManager) manager;
+						from = sgm.findFirstVisibleItemPositions(new int[2])[0];
+						to = sgm.findLastVisibleItemPositions(new int[2])[1];
+					}
+
+					if (from > -1 && to > -1) {
+						for (int i = from; i <= to; i++) {
+							new ImageDownloader().execute(v.getChildAt(i - from));
+						}
+					}
+				}
+			}
+
+			@Override
+			public void onScrolled(RecyclerView p1, int p2, int p3) {
+
+			}
+		});
 	}
 
 	@Override
@@ -84,6 +127,66 @@ public class BookListRecyclerAdapter extends AbsRecyclerViewAdapter {
 		return data.size();
 	}
 
+	private boolean waitUntilNotScrolling(ViewHolder h, Book book) {
+		while (mScrolling) {
+			if (h.book != book) {
+				return false;
+			}
+
+			try {
+				Thread.sleep(200);
+			} catch (Exception e) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private class ImageDownloader extends AsyncTask<Object, Object, Void> {
+
+		@Override
+		protected Void doInBackground(Object[] params) {
+			View v = (View) params[0];
+			ViewHolder h = (ViewHolder) v.getTag();
+			Book book = h.book;
+
+			if (v != null && !TextUtils.isEmpty(book.previewImageUrl)) {
+				//if (!waitUntilNotScrolling(h, book)) return null;
+
+				ImageView imgView = h.mPreviewImageView;
+
+				Bitmap img = BookApi.getThumb(getContext(), book);
+
+				if (img != null) {
+					publishProgress(new Object[]{v, img, imgView, book});
+				}
+			}
+
+			return null;
+		}
+
+		@Override
+		protected void onProgressUpdate(Object[] values) {
+			super.onProgressUpdate(values);
+
+			View v = (View) values[0];
+
+			if (!(v.getTag() instanceof ViewHolder) || (((ViewHolder) v.getTag()).book != null &&
+					((ViewHolder) v.getTag()).book.bookId != ((Book) values[3]).bookId)) {
+				return;
+			}
+
+			Bitmap img = (Bitmap) values[1];
+			ImageView iv = (ImageView) values[2];
+			iv.setAlpha(1.0f);
+			iv.setImageBitmap(img);
+			iv.setTag(false);
+		}
+
+
+	}
+
 	public class ViewHolder extends ClickableViewHolder {
 
 		public ImageView mPreviewImageView;
@@ -92,7 +195,6 @@ public class BookListRecyclerAdapter extends AbsRecyclerViewAdapter {
 
 		public ListPopupWindow mPopupWindow;
 
-		// 此处应该是错误用法
 		public Book book;
 
 		public ViewHolder(View itemView) {
@@ -113,6 +215,8 @@ public class BookListRecyclerAdapter extends AbsRecyclerViewAdapter {
 					mPopupWindow.show();
 				}
 			});
+
+			itemView.setTag(this);
 		}
 
 		private class PopupAdapter extends BaseAdapter {
