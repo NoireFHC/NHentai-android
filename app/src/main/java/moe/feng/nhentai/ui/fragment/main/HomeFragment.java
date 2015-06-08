@@ -34,7 +34,7 @@ public class HomeFragment extends Fragment {
 
 		mRecyclerView = (RecyclerView) view.findViewById(R.id.recylcer_view);
 		mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-		mRecyclerView.setHasFixedSize(false);
+		mRecyclerView.setHasFixedSize(true);
 
 		mBooks = new ArrayList<>();
 		mAdapter = new BookListRecyclerAdapter(mRecyclerView, mBooks);

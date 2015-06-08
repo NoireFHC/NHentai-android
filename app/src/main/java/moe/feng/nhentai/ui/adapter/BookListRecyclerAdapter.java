@@ -91,7 +91,7 @@ public class BookListRecyclerAdapter extends AbsRecyclerViewAdapter {
 		if (holder instanceof ViewHolder) {
 			ViewHolder h = (ViewHolder) holder;
 			h.mPreviewImageView.setImageBitmap(null);
-			h.mPreviewImageView.setVisibility(View.GONE);
+			h.mPreviewImageView.setVisibility(View.INVISIBLE);
 		}
 	}
 	
@@ -101,7 +101,6 @@ public class BookListRecyclerAdapter extends AbsRecyclerViewAdapter {
 		if (holder instanceof ViewHolder) {
 			ViewHolder mHolder = (ViewHolder) holder;
 			mHolder.mTitleTextView.setText(data.get(position).title);
-			mHolder.mOtherTextView.setText(data.get(position).other);
 			String previewImageUrl = data.get(position).previewImageUrl;
 			if (previewImageUrl != null) {
 				// TODO 显示本子的预览图
@@ -201,7 +200,7 @@ public class BookListRecyclerAdapter extends AbsRecyclerViewAdapter {
 	public class ViewHolder extends ClickableViewHolder {
 
 		public ImageView mPreviewImageView;
-		public TextView mTitleTextView, mOtherTextView;
+		public TextView mTitleTextView;
 		public ImageButton mMenuButton;
 
 		public ListPopupWindow mPopupWindow;
@@ -212,7 +211,6 @@ public class BookListRecyclerAdapter extends AbsRecyclerViewAdapter {
 			super(itemView);
 			mPreviewImageView = (ImageView) itemView.findViewById(R.id.book_preview);
 			mTitleTextView = (TextView) itemView.findViewById(R.id.book_title);
-			mOtherTextView = (TextView) itemView.findViewById(R.id.book_other);
 			mMenuButton = (ImageButton) itemView.findViewById(R.id.book_menu);
 
 			mPopupWindow = new ListPopupWindow(getContext());
