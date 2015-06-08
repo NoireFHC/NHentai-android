@@ -11,7 +11,7 @@ public abstract class AbsRecyclerViewAdapter extends RecyclerView.Adapter<AbsRec
 
 	private Context context;
 
-	private RecyclerView mRecyclerView;
+	protected RecyclerView mRecyclerView;
 	protected List<RecyclerView.OnScrollListener> mListeners = new ArrayList<RecyclerView.OnScrollListener>();
 
 	public AbsRecyclerViewAdapter(RecyclerView recyclerView) {

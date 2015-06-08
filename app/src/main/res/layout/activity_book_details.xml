@@ -103,7 +103,7 @@
         app:layout_anchor="@id/appbar"
         app:layout_anchorGravity="bottom|right|end"
         android:src="@drawable/ic_photo_library_black_24dp"
-        android:tint="#5F000000"
+        android:tint="@android:color/white"
         android:layout_margin="24dp"
         fab:fab_colorNormal="@color/md_green_500"
         fab:fab_colorPressed="@color/md_green_300"/>

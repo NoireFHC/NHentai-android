@@ -71,6 +71,7 @@ public class HomeFragment extends Fragment {
 				if (!newData.isEmpty()) {
 					mBooks.addAll(newData);
 					mAdapter.notifyDataSetChanged();
+					mAdapter.loadShowingContent();
 				} else {
 
 				}

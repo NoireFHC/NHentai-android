@@ -48,25 +48,7 @@ public class BookListRecyclerAdapter extends AbsRecyclerViewAdapter {
 				mScrolling = state != RecyclerView.SCROLL_STATE_IDLE;
 
 				if (!mScrolling) {
-					RecyclerView.LayoutManager manager = v.getLayoutManager();
-
-					int from = -1;
-					int to = -1;
-					if (manager instanceof LinearLayoutManager) {
-						LinearLayoutManager lm = (LinearLayoutManager) manager;
-						from = lm.findFirstVisibleItemPosition();
-						to = lm.findLastVisibleItemPosition();
-					} else if (manager instanceof StaggeredGridLayoutManager) {
-						StaggeredGridLayoutManager sgm = (StaggeredGridLayoutManager) manager;
-						from = sgm.findFirstVisibleItemPositions(new int[2])[0];
-						to = sgm.findLastVisibleItemPositions(new int[2])[1];
-					}
-
-					if (from > -1 && to > -1) {
-						for (int i = from; i <= to; i++) {
-							new ImageDownloader().execute(v.getChildAt(i - from));
-						}
-					}
+					loadShowingContent();
 				}
 			}
 
@@ -135,6 +117,32 @@ public class BookListRecyclerAdapter extends AbsRecyclerViewAdapter {
 	@Override
 	public int getItemCount() {
 		return data.size();
+	}
+
+	public void loadShowingContent() {
+		RecyclerView.LayoutManager manager = mRecyclerView.getLayoutManager();
+
+		int from = -1;
+		int to = -1;
+		try {
+			if (manager instanceof LinearLayoutManager) {
+				LinearLayoutManager lm = (LinearLayoutManager) manager;
+				from = lm.findFirstVisibleItemPosition();
+				to = lm.findLastVisibleItemPosition();
+			} else if (manager instanceof StaggeredGridLayoutManager) {
+				StaggeredGridLayoutManager sgm = (StaggeredGridLayoutManager) manager;
+				from = sgm.findFirstVisibleItemPositions(new int[2])[0];
+				to = sgm.findLastVisibleItemPositions(new int[2])[1];
+			}
+		} catch (Exception e) {
+
+		}
+
+		if (from > -1 && to > -1) {
+			for (int i = from; i <= to; i++) {
+				new ImageDownloader().execute(mRecyclerView.getChildAt(i - from));
+			}
+		}
 	}
 
 	private boolean waitUntilNotScrolling(ViewHolder h, Book book) {
