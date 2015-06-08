@@ -34,6 +34,7 @@ public class GalleryActivity extends AppCompatActivity {
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setTitle(book.titleJP != null ? book.titleJP : book.title);
 
 		mPager = (ViewPager) findViewById(R.id.pager);
 		mPagerAdpater = new GalleryPagerAdapter(getFragmentManager(), book);

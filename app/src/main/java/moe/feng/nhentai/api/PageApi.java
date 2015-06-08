@@ -1,5 +1,7 @@
 package moe.feng.nhentai.api;
 
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import org.jsoup.Jsoup;
@@ -11,7 +13,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import moe.feng.nhentai.api.common.NHentaiUrl;
+import moe.feng.nhentai.cache.file.FileCacheManager;
 import moe.feng.nhentai.model.Book;
+
+import static moe.feng.nhentai.cache.common.Constants.CACHE_PAGE_IMG;
+import static moe.feng.nhentai.cache.common.Constants.CACHE_THUMB;
 
 public class PageApi {
 
@@ -65,6 +71,17 @@ public class PageApi {
 
 	public static ArrayList<Book> getHomePageList(int number) {
 		return getPageList(NHentaiUrl.getHomePageUrl(number));
+	}
+
+	public static Bitmap getPageOriginImage(Context context, Book book, int page_num) {
+		String url = NHentaiUrl.getOriginPictureUrl(book.galleryId, String.valueOf(page_num));
+		FileCacheManager m = FileCacheManager.getInstance(context);
+
+		if (!m.cacheExistsUrl(CACHE_PAGE_IMG, url) && !m.createCacheFromNetwork(CACHE_PAGE_IMG, url)) {
+			return null;
+		}
+
+		return m.getBitmapUrl(CACHE_PAGE_IMG, url);
 	}
 
 }

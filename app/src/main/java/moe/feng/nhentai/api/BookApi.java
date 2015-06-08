@@ -54,7 +54,7 @@ public class BookApi {
 			System.out.println(s);
 			s = s.substring(s.lastIndexOf("<div>") + "<div>".length(), s.length()).trim();
 			System.out.println(s);
-			book.pageCount = Integer.getInteger(s);
+			book.pageCount = Integer.valueOf(s);
 		} catch (Exception e) {
 
 		}

@@ -9,18 +9,25 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.melnykov.fab.FloatingActionButton;
 
 import moe.feng.nhentai.R;
 import moe.feng.nhentai.api.BookApi;
 import moe.feng.nhentai.cache.common.Constants;
 import moe.feng.nhentai.cache.file.FileCacheManager;
 import moe.feng.nhentai.model.Book;
-import moe.feng.nhentai.ui.fragment.BookDetailsFragment;
+import moe.feng.nhentai.ui.adapter.BookThumbHorizontalRecyclerAdapter;
+import moe.feng.nhentai.ui.common.AbsRecyclerViewAdapter;
 import moe.feng.nhentai.util.AsyncTask;
 import moe.feng.nhentai.util.ColorGenerator;
 import moe.feng.nhentai.util.TextDrawable;
@@ -29,6 +36,9 @@ public class BookDetailsActivity extends AppCompatActivity {
 
 	private ImageView imageView;
 	private CollapsingToolbarLayout collapsingToolbar;
+	private FloatingActionButton mFAB;
+	private RecyclerView mRecyclerView;
+	private TextView mOtherText;
 
 	private Book book;
 
@@ -48,10 +58,22 @@ public class BookDetailsActivity extends AppCompatActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-		//collapsingToolbar.setTitle(book.title);
+		collapsingToolbar.setTitle(book.title);
 
 		imageView = (ImageView) findViewById(R.id.app_bar_background);
 		ViewCompat.setTransitionName(imageView, TRANSITION_NAME_IMAGE);
+
+		mFAB = (FloatingActionButton) findViewById(R.id.fab);
+		mRecyclerView = (RecyclerView) findViewById(R.id.book_thumb_list);
+		mOtherText = (TextView) findViewById(R.id.tv_other);
+		mFAB.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				GalleryActivity.launch(BookDetailsActivity.this, book, 0);
+			}
+		});
+
+		updateDetailsContent();
 
 		FileCacheManager cm = FileCacheManager.getInstance(getApplicationContext());
 		if (cm.cacheExistsUrl(Constants.CACHE_THUMB, book.previewImageUrl)) {
@@ -64,10 +86,6 @@ public class BookDetailsActivity extends AppCompatActivity {
 		if (cm.cacheExistsUrl(Constants.CACHE_COVER, book.bigCoverImageUrl)) {
 			imageView.setImageBitmap(cm.getBitmapUrl(Constants.CACHE_COVER, book.bigCoverImageUrl));
 		}
-
-		getFragmentManager().beginTransaction()
-				.replace(R.id.book_details_container, BookDetailsFragment.newInstance(book))
-				.commit();
 
 		new BookGetTask().execute(book.bookId);
 	}
@@ -90,6 +108,22 @@ public class BookDetailsActivity extends AppCompatActivity {
 		new CoverTask().execute(book);
 	}
 
+	private void updateDetailsContent() {
+		mOtherText.setText(book.other);
+
+		mRecyclerView.setHasFixedSize(true);
+		mRecyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2, LinearLayoutManager.HORIZONTAL, false));
+
+		BookThumbHorizontalRecyclerAdapter adapter = new BookThumbHorizontalRecyclerAdapter(mRecyclerView, book);
+		adapter.setOnItemClickListener(new AbsRecyclerViewAdapter.OnItemClickListener() {
+			@Override
+			public void onItemClick(int position, AbsRecyclerViewAdapter.ClickableViewHolder holder) {
+				GalleryActivity.launch(BookDetailsActivity.this, book, position);
+			}
+		});
+		mRecyclerView.setAdapter(adapter);
+	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
@@ -104,13 +138,19 @@ public class BookDetailsActivity extends AppCompatActivity {
 
 		@Override
 		protected Book doInBackground(String... params) {
-			return BookApi.getBook(params[0]);
+			try {
+				return BookApi.getBook(params[0]);
+			} catch (Exception e) {
+				return null;
+			}
 		}
 
 		@Override
 		protected void onPostExecute(Book result) {
-			book = result;
-			updateUIContent();
+			if (result != null) {
+				book = result;
+				updateUIContent();
+			}
 		}
 
 	}

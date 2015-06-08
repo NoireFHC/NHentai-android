@@ -15,20 +15,20 @@ public class GalleryPagerAdapter extends FragmentPagerAdapter {
 	public GalleryPagerAdapter(FragmentManager fm, Book book) {
 		super(fm);
 		this.book = book;
-		this.fragments = new Fragment[book.bookImageOriginUrl.size()];
+		this.fragments = new Fragment[book.pageCount];
 	}
 
 	@Override
 	public Fragment getItem(int position) {
 		if (fragments[position] == null) {
-			fragments[position] = BookPageFragment.newInstance(book, position);
+			fragments[position] = BookPageFragment.newInstance(book, position + 1);
 		}
 		return fragments[position];
 	}
 
 	@Override
 	public int getCount() {
-		return book.bookImageOriginUrl.size();
+		return book.pageCount;
 	}
 
 }
