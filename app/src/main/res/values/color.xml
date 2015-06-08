@@ -3,6 +3,11 @@
 
 	<color name="sexy_purple_accent">#DE72FF</color>
 	<color name="sexy_purple_500">#BE3CE2</color>
-	<color name="sexy_purple_800">#9F3CC3</color>
+	<color name="sexy_purple_800">#8C38AF</color>
+
+	<color name="md_green_500">#4CAF50</color>
+	<color name="md_green_300">#81C784</color>
+
+	<color name="app_bar_translucent_black">#4F000000</color>
 	
 </resources>
