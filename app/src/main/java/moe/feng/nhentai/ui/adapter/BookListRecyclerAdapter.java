@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
@@ -26,6 +27,7 @@ import moe.feng.nhentai.ui.common.AbsRecyclerViewAdapter;
 import moe.feng.nhentai.util.AsyncTask;
 import moe.feng.nhentai.util.ColorGenerator;
 import moe.feng.nhentai.util.TextDrawable;
+import moe.feng.nhentai.util.Utility;
 
 public class BookListRecyclerAdapter extends AbsRecyclerViewAdapter {
 
@@ -33,30 +35,12 @@ public class BookListRecyclerAdapter extends AbsRecyclerViewAdapter {
 
 	private ColorGenerator mColorGenerator;
 
-	private boolean mScrolling = false;
-
 	public static final String TAG = BookListRecyclerAdapter.class.getSimpleName();
 
 	public BookListRecyclerAdapter(RecyclerView recyclerView, ArrayList<Book> data) {
 		super(recyclerView);
 		this.data = data;
 		mColorGenerator = ColorGenerator.MATERIAL;
-		this.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
-			@Override
-			public void onScrollStateChanged(RecyclerView v, int state) {
-				mScrolling = state != RecyclerView.SCROLL_STATE_IDLE;
-
-				if (!mScrolling) {
-					loadShowingContent();
-				}
-			}
-
-			@Override
-			public void onScrolled(RecyclerView p1, int p2, int p3) {
-
-			}
-		});
 	}
 
 	@Override
@@ -78,14 +62,18 @@ public class BookListRecyclerAdapter extends AbsRecyclerViewAdapter {
 	}
 	
 	@Override
-	public void onBindViewHolder(ClickableViewHolder holder, int position) {
+	public void onBindViewHolder(ClickableViewHolder holder, final int position) {
 		super.onBindViewHolder(holder, position);
 		if (holder instanceof ViewHolder) {
-			ViewHolder mHolder = (ViewHolder) holder;
+			final ViewHolder mHolder = (ViewHolder) holder;
 			mHolder.mTitleTextView.setText(data.get(position).title);
 			String previewImageUrl = data.get(position).previewImageUrl;
+
+			int color = mColorGenerator.getColor(data.get(position).title);
+			TextDrawable drawable = TextDrawable.builder().buildRect(Utility.getFirstCharacter(data.get(position).title), color);
+			mHolder.mPreviewImageView.setImageDrawable(drawable);
+
 			if (previewImageUrl != null) {
-				// TODO 显示本子的预览图
 				switch (previewImageUrl) {
 					case "0":
 						mHolder.mPreviewImageView.setImageResource(R.drawable.holder_0);
@@ -97,13 +85,26 @@ public class BookListRecyclerAdapter extends AbsRecyclerViewAdapter {
 						mHolder.mPreviewImageView.setImageResource(R.drawable.holder_2);
 						break;
 					default:
-						// TODO 找不到缓存，从网络中抽取数据
+						ViewTreeObserver vto = mHolder.mPreviewImageView.getViewTreeObserver();
+						vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+							@Override
+							public void onGlobalLayout() {
+								int thumbWidth = data.get(position).thumbWidth;
+								int thumbHeight = data.get(position).thumbHeight;
+								if (thumbWidth > 0 && thumbHeight > 0) {
+									int width = mHolder.mPreviewImageView.getMeasuredWidth();
+									int height = Math.round(width * ((float) thumbHeight / thumbWidth));
+									mHolder.mPreviewImageView.getLayoutParams().height = height;
+									mHolder.mPreviewImageView.setMinimumHeight(height);
+								}
+								mHolder.mPreviewImageView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+
+							}
+						});
+						new ImageDownloader().execute(mHolder.getParentView());
 				}
-			} else {
-				int color = mColorGenerator.getColor(data.get(position).title);
-				TextDrawable drawable = TextDrawable.builder().buildRect(data.get(position).title.substring(0, 1), color);
-				mHolder.mPreviewImageView.setImageDrawable(drawable);
 			}
+
 			mHolder.mPopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -119,48 +120,6 @@ public class BookListRecyclerAdapter extends AbsRecyclerViewAdapter {
 		return data.size();
 	}
 
-	public void loadShowingContent() {
-		RecyclerView.LayoutManager manager = mRecyclerView.getLayoutManager();
-
-		int from = -1;
-		int to = -1;
-		try {
-			if (manager instanceof LinearLayoutManager) {
-				LinearLayoutManager lm = (LinearLayoutManager) manager;
-				from = lm.findFirstVisibleItemPosition();
-				to = lm.findLastVisibleItemPosition();
-			} else if (manager instanceof StaggeredGridLayoutManager) {
-				StaggeredGridLayoutManager sgm = (StaggeredGridLayoutManager) manager;
-				from = sgm.findFirstVisibleItemPositions(new int[2])[0];
-				to = sgm.findLastVisibleItemPositions(new int[2])[1];
-			}
-		} catch (Exception e) {
-
-		}
-
-		if (from > -1 && to > -1) {
-			for (int i = from; i <= to; i++) {
-				new ImageDownloader().execute(mRecyclerView.getChildAt(i - from));
-			}
-		}
-	}
-
-	private boolean waitUntilNotScrolling(ViewHolder h, Book book) {
-		while (mScrolling) {
-			if (h.book != book) {
-				return false;
-			}
-
-			try {
-				Thread.sleep(200);
-			} catch (Exception e) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
 	private class ImageDownloader extends AsyncTask<Object, Object, Void> {
 
 		@Override
@@ -170,8 +129,6 @@ public class BookListRecyclerAdapter extends AbsRecyclerViewAdapter {
 			Book book = h.book;
 
 			if (v != null && !TextUtils.isEmpty(book.previewImageUrl)) {
-				//if (!waitUntilNotScrolling(h, book)) return null;
-
 				ImageView imgView = h.mPreviewImageView;
 
 				Bitmap img = BookApi.getThumb(getContext(), book);

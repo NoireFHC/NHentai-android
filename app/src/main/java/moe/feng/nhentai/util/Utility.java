@@ -18,4 +18,20 @@ public class Utility {
 		return result;
 	}
 
+	public static String getFirstCharacter(String sentence) {
+		for (int i = 0; i < sentence.length(); i++) {
+			String s = sentence.substring(i, i+1);
+			if (s.equals("[") || s.equals("]")) continue;
+			if (s.equals("{") || s.equals("}")) continue;
+			if (s.equals("(") || s.equals(")")) continue;
+			if (s.equals(",") || s.equals(".")) continue;
+			if (s.equals("<") || s.equals(">")) continue;
+			if (s.equals("《") || s.equals("》")) continue;
+			if (s.equals("【") || s.equals("】")) continue;
+			if (s.equals("｛") || s.equals("｝")) continue;
+			return s;
+		}
+		return null;
+	}
+
 }

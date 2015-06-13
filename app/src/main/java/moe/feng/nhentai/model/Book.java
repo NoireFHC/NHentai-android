@@ -16,6 +16,8 @@ public class Book {
 	public ArrayList<String> bookImageThumbUrl;
 	public ArrayList<String> bookImageOriginUrl;
 
+	public int thumbHeight = 0, thumbWidth = 0;
+
 	public Book() {
 		this(null, null, null);
 	}

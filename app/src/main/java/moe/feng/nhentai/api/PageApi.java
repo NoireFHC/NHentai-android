@@ -17,7 +17,6 @@ import moe.feng.nhentai.cache.file.FileCacheManager;
 import moe.feng.nhentai.model.Book;
 
 import static moe.feng.nhentai.cache.common.Constants.CACHE_PAGE_IMG;
-import static moe.feng.nhentai.cache.common.Constants.CACHE_THUMB;
 
 public class PageApi {
 
@@ -56,6 +55,12 @@ public class PageApi {
 					book.galleryId = galleryId;
 					book.bigCoverImageUrl = NHentaiUrl.getBigCoverUrl(galleryId);
 					book.previewImageUrl = NHentaiUrl.getThumbUrl(galleryId);
+					try {
+						book.thumbHeight = Integer.valueOf(imge.attr("height"));
+						book.thumbWidth = Integer.valueOf(imge.attr("width"));
+					} catch (Exception ex) {
+
+					}
 				}
 			}
 
@@ -71,6 +76,10 @@ public class PageApi {
 
 	public static ArrayList<Book> getHomePageList(int number) {
 		return getPageList(NHentaiUrl.getHomePageUrl(number));
+	}
+
+	public static ArrayList<Book> getSearchPageList(String keyword, int number) {
+		return getPageList(NHentaiUrl.getSearchUrl(keyword, number));
 	}
 
 	public static Bitmap getPageOriginImage(Context context, Book book, int page_num) {

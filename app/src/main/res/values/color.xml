@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<color name="sexy_purple_accent">#DE72FF</color>
-	<color name="sexy_purple_500">#BE3CE2</color>
-	<color name="sexy_purple_800">#8C38AF</color>
+	<color name="deep_purple_300">#9575CD</color>
+	<color name="deep_purple_500">#673AB7</color>
+	<color name="deep_purple_800">#4527A0</color>
 
-	<color name="md_green_500">#4CAF50</color>
-	<color name="md_green_300">#81C784</color>
+	<color name="purple_300">#BA68C8</color>
+	<color name="pink_500">#E91E63</color>
+	<color name="indigo_500">#3F51B5</color>
+	<color name="blue_500">#2196F3</color>
+	<color name="teal_500">#009688</color>
+	<color name="green_500">#4CAF50</color>
+	<color name="green_300">#81C784</color>
+	<color name="orange_500">#FF9800</color>
+	<color name="brown_500">#795548</color>
 
 	<color name="app_bar_translucent_black">#4F000000</color>
 	

@@ -30,12 +30,21 @@
 
 	    <activity
 		    android:name=".ui.GalleryActivity"
-		    android:label="@string/app_name"
+		    android:label="@string/activity_gallery"
 		    android:theme="@style/Theme.NHBooks.Dark">
 		    <intent-filter>
 			    <action android:name="android.intent.action.MAIN" />
 		    </intent-filter>
 	    </activity>
+
+        <activity
+            android:name=".ui.SearchResultActivity"
+            android:label="@string/activity_search_result"
+            android:theme="@style/Theme.NHBooks.Light.DarkActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

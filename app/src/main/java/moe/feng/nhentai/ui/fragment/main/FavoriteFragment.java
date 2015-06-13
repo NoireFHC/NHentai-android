@@ -28,7 +28,7 @@ public class FavoriteFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle state) {
 		View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-		mRecyclerView = (RecyclerView) view.findViewById(R.id.recylcer_view);
+		mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 		mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 		mRecyclerView.setHasFixedSize(false);
 

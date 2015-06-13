@@ -31,7 +31,7 @@ public abstract class AbsActivity extends AppCompatActivity {
 
 		if (Build.VERSION.SDK_INT >= 21) {
 			getWindow().setStatusBarColor(Color.TRANSPARENT);
-			getWindow().setNavigationBarColor(getResources().getColor(R.color.sexy_purple_800));
+			getWindow().setNavigationBarColor(getResources().getColor(R.color.deep_purple_800));
 		}
 
 		super.onCreate(savedInstanceState);

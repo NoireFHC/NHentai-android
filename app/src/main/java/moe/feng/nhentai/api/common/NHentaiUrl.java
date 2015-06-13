@@ -6,11 +6,15 @@ public class NHentaiUrl {
 	public static final String NHENTAI_I = "http://i.nhentai.net";
 
 	public static String getSearchUrl(String content) {
+		return getSearchUrl(content, 1);
+	}
+
+	public static String getSearchUrl(String content, int page_num) {
 		String targetContent = content;
 		if (targetContent.contains(" ")) {
 			targetContent = targetContent.replaceAll(" ", "+");
 		}
-		return NHENTAI_HOME + "/search/?q=" + targetContent;
+		return NHENTAI_HOME + "/search/?q=" + targetContent + "&page=" + page_num;
 	}
 
 	public static String getBookDetailsUrl(String book_id) {
