@@ -800,7 +800,11 @@ public class SearchBox extends RelativeLayout {
 					.findViewById(R.id.title);
 			title.setText(option.title);
 			ImageView icon = (ImageView) convertView.findViewById(R.id.icon);
-			icon.setImageDrawable(option.icon);
+			if (option.icon != null) {
+				icon.setImageDrawable(option.icon);
+			} else {
+				icon.setImageResource(option.drawableResId);
+			}
 			ImageView up = (ImageView) convertView.findViewById(R.id.up);
 			up.setOnClickListener(new OnClickListener() {
 

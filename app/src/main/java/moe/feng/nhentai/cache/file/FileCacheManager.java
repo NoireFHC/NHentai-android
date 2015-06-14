@@ -15,6 +15,8 @@ import java.net.URL;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 
+import moe.feng.nhentai.util.HttpTools;
+
 import static moe.feng.nhentai.BuildConfig.DEBUG;
 
 public class FileCacheManager
@@ -69,7 +71,7 @@ public class FileCacheManager
 	}
 	
 	public boolean createCacheFromStrem(String type, String name, InputStream stream) {
-		File f = new File(getCachePath(type, name));
+		File f = new File(getCachePath(type, name) + "_downloading");
 		f.getParentFile().mkdirs();
 		f.getParentFile().mkdir();
 		
@@ -108,7 +110,9 @@ public class FileCacheManager
 		} catch (IOException e) {
 			
 		}
-		
+
+		f.renameTo(new File(getCachePath(type, name)));
+
 		return true;
 	}
 	
@@ -120,7 +124,19 @@ public class FileCacheManager
 	public boolean cacheExists(String type, String name) {
 		return new File(getCachePath(type, name)).isFile();
 	}
-	
+
+	public boolean deleteCacheUrl(String type, String url) {
+		return deleteCache(type, getCacheName(url));
+	}
+
+	public boolean deleteCache(String type, String name) {
+		if (cacheExists(type, name)) {
+			return new File(getCachePath(type, name)).delete();
+		} else {
+			return false;
+		}
+	}
+
 	public InputStream openCacheStream(String type, String name) {
 		try {
 			return new FileInputStream(new File(getCachePath(type, name)));

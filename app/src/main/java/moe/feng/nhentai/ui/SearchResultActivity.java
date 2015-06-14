@@ -1,6 +1,7 @@
 package moe.feng.nhentai.ui;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -46,6 +47,9 @@ public class SearchResultActivity extends AbsActivity {
 
 		mActionBar.setDisplayHomeAsUpEnabled(true);
 		mActionBar.setTitle(String.format(getString(R.string.title_search_result), keyword));
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			mActionBar.setElevation(getResources().getDimension(R.dimen.appbar_elevation));
+		}
 
 		new PageGetTask().execute(mNowPage);
 	}
