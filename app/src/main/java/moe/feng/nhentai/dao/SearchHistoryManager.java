@@ -14,25 +14,35 @@ public class SearchHistoryManager {
 
 	private QuickKV mQuickKV;
 	private KeyValueDatabase mDB;
+	private String mSectionName;
 
-	private static SearchHistoryManager sInstance;
+	private static ArrayList<Instance> sInstances = new ArrayList<>();
 
 	private static final String DATABASE_NAME = "search_history";
 
-	public static SearchHistoryManager getInstance(Context context) {
+	public static SearchHistoryManager getInstance(Context context, String sectionName) {
+		SearchHistoryManager sInstance = null;
+		for (Instance i : sInstances) {
+			if (i.sectionName == sectionName) {
+				sInstance = i.manager;
+				break;
+			}
+		}
 		if (sInstance == null) {
-			sInstance = new SearchHistoryManager(context);
+			sInstance = new SearchHistoryManager(context, sectionName);
+			sInstances.add(new Instance(sInstance, sectionName));
 		}
 		return sInstance;
 	}
 
-	public SearchHistoryManager(Context context) {
-		mQuickKV = new QuickKV(context);
+	public SearchHistoryManager(Context context, String sectionName) {
+		this.mQuickKV = new QuickKV(context);
+		this.mSectionName = sectionName;
 		reloadDatabase();
 	}
 
 	public void reloadDatabase() {
-		mDB = mQuickKV.getDatabase(DATABASE_NAME);
+		mDB = mQuickKV.getDatabase(DATABASE_NAME + "_" + mSectionName);
 	}
 
 	public void add(String keyword) {
@@ -88,6 +98,18 @@ public class SearchHistoryManager {
 			results.add(new SearchResult(history, R.drawable.ic_history));
 		}
 		return results;
+	}
+
+	private static class Instance {
+
+		SearchHistoryManager manager;
+		String sectionName;
+
+		public Instance(SearchHistoryManager manager, String sectionName) {
+			this.manager = manager;
+			this.sectionName = sectionName;
+		}
+
 	}
 
 }

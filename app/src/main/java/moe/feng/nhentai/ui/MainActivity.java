@@ -37,7 +37,7 @@ public class MainActivity extends AbsActivity {
 
 		setContentView(R.layout.activity_main);
 
-		mSearchHistoryManager = SearchHistoryManager.getInstance(getApplicationContext());
+		mSearchHistoryManager = SearchHistoryManager.getInstance(getApplicationContext(), "all");
 	}
 
 	@Override
