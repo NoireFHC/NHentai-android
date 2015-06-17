@@ -15,12 +15,10 @@ import java.net.URL;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 
-import moe.feng.nhentai.util.HttpTools;
-
 import static moe.feng.nhentai.BuildConfig.DEBUG;
 
-public class FileCacheManager
-{
+public class FileCacheManager {
+
 	private static final String TAG = FileCacheManager.class.getSimpleName();
 	
 	private static FileCacheManager sInstance;
@@ -40,7 +38,7 @@ public class FileCacheManager
 	}
 	
 	public boolean createCacheFromNetwork(String type, String url) {
-		
+
 		if (DEBUG) {
 			Log.d(TAG, "requesting cache from " + url);
 		}
