@@ -116,6 +116,10 @@ public class MainActivity extends AbsActivity {
 			openSearchBox();
 			return true;
 		}
+		if (id == R.id.action_settings) {
+			SettingsActivity.launchActivity(this, SettingsActivity.FLAG_MAIN);
+			return true;
+		}
 
 		return super.onOptionsItemSelected(item);
 	}

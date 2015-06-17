@@ -21,4 +21,8 @@
     <string name="title_search_result">Search result: %s</string>
     <string name="tips_no_result">No result.</string>
 
+    <string name="settings_main">Settings</string>
+    <string name="category_about">About</string>
+    <string name="settings_license">Licenses</string>
+
 </resources>

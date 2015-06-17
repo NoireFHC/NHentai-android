@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<PreferenceCategory android:key="about" android:title="@string/category_about">
+
+		<moe.feng.nhentai.view.pref.Preference
+			android:key="license"
+		    android:title="@string/settings_license"/>
+
+	</PreferenceCategory>
+
+</PreferenceScreen>

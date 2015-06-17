@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<attr name="dialogPreferenceStyle" format="reference"/>
+	<attr name="editTextPreferenceStyle" format="reference"/>
+	<attr name="switchPreferenceStyle" format="reference"/>
+	<attr name="checkBoxPreferenceStyle" format="reference"/>
+
+	<declare-styleable name="ListPreference">
+		<attr name="entries" format="reference"/>
+		<attr name="entryValues" format="reference"/>
+	</declare-styleable>
+
+	<declare-styleable name="DialogPreference">
+		<attr name="dialogTitle" format="string"/>
+		<attr name="dialogMessage" format="string"/>
+		<attr name="dialogIcon" format="reference"/>
+		<attr name="positiveButtonText" format="string"/>
+		<attr name="negativeButtonText" format="string"/>
+		<attr name="dialogLayout" format="reference"/>
+	</declare-styleable>
+
+	<declare-styleable name="CheckBoxPreference">
+		<attr name="summaryOn" format="string"/>
+		<attr name="summaryOff" format="string"/>
+		<attr name="disableDependentsState" format="boolean"/>
+	</declare-styleable>
+
+	<declare-styleable name="SwitchPreference">
+		<attr name="summaryOn"/>
+		<attr name="summaryOff" />
+		<attr name="switchTextOn" format="string"/>
+		<attr name="switchTextOff" format="string"/>
+		<attr name="disableDependentsState" />
+	</declare-styleable>
+
+</resources>
