@@ -5,11 +5,15 @@
     <string name="action_settings">Settings</string>
     <string name="action_search">Search</string>
 
-    <string name="title_page_home">Home</string>
+    <string name="item_home">Home</string>
+    <string name="item_tag">Tags</string>
+    <string name="item_character">Characters</string>
+
+    <string name="title_page_latest">Latest</string>
     <string name="title_page_download">Saved books</string>
     <string name="title_page_favorite">Favorites</string>
     <string-array name="page_titles">
-        <item>@string/title_page_home</item>
+        <item>@string/title_page_latest</item>
         <item>@string/title_page_download</item>
         <item>@string/title_page_favorite</item>
     </string-array>
