@@ -34,29 +34,12 @@
 			android:paddingTop="10dp"
 			android:paddingBottom="10dp">
 
-			<LinearLayout
-				android:layout_width="0dp"
+			<TextView
+				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:orientation="vertical"
-				android:layout_weight="1">
-
-				<TextView
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:id="@+id/book_title"
-					android:textAppearance="?android:attr/textAppearanceSmall"
-					tools:text="Title"/>
-
-			</LinearLayout>
-
-			<ImageButton
-				android:layout_width="16dp"
-				android:layout_height="16dp"
-				android:padding="8dp"
-				android:id="@+id/book_menu"
-				android:src="@drawable/abc_ic_menu_moreoverflow_mtrl_alpha"
-				android:background="?attr/selectableItemBackgroundBorderless"
-				android:tint="#888"/>
+				android:id="@+id/book_title"
+				android:textAppearance="?android:attr/textAppearanceSmall"
+				tools:text="Title"/>
 
 		</LinearLayout>
 

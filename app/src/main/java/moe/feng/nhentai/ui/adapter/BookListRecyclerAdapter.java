@@ -1,11 +1,8 @@
 package moe.feng.nhentai.ui.adapter;
 
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,8 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -48,17 +43,6 @@ public class BookListRecyclerAdapter extends AbsRecyclerViewAdapter {
 		bindContext(viewGroup.getContext());
 		View view = LayoutInflater.from(getContext()).inflate(R.layout.list_item_book_card, viewGroup, false);
 		return new ViewHolder(view);
-	}
-
-	@Override
-	public void onViewRecycled(ClickableViewHolder holder) {
-		super.onViewRecycled(holder);
-		
-		if (holder instanceof ViewHolder) {
-			ViewHolder h = (ViewHolder) holder;
-			h.mPreviewImageView.setImageBitmap(null);
-			h.mPreviewImageView.setVisibility(View.INVISIBLE);
-		}
 	}
 	
 	@Override
@@ -105,12 +89,6 @@ public class BookListRecyclerAdapter extends AbsRecyclerViewAdapter {
 				}
 			}
 
-			mHolder.mPopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-				@Override
-				public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-					Log.i(TAG, "You clicked item no." + i);
-				}
-			});
 			mHolder.book = data.get(position);
 		}
 	}
@@ -166,9 +144,6 @@ public class BookListRecyclerAdapter extends AbsRecyclerViewAdapter {
 
 		public ImageView mPreviewImageView;
 		public TextView mTitleTextView;
-		public ImageButton mMenuButton;
-
-		public ListPopupWindow mPopupWindow;
 
 		public Book book;
 
@@ -176,69 +151,8 @@ public class BookListRecyclerAdapter extends AbsRecyclerViewAdapter {
 			super(itemView);
 			mPreviewImageView = (ImageView) itemView.findViewById(R.id.book_preview);
 			mTitleTextView = (TextView) itemView.findViewById(R.id.book_title);
-			mMenuButton = (ImageButton) itemView.findViewById(R.id.book_menu);
-
-			mPopupWindow = new ListPopupWindow(getContext());
-			mPopupWindow.setAdapter(new PopupAdapter(getContext(), new String[] {"Details", "Download", "Add to favorites"}));
-			mPopupWindow.setAnchorView(mMenuButton);
-			mPopupWindow.setWidth(ListPopupWindow.WRAP_CONTENT);
-			mPopupWindow.setContentWidth(ListPopupWindow.WRAP_CONTENT);
-			mMenuButton.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					mPopupWindow.show();
-				}
-			});
 
 			itemView.setTag(this);
-		}
-
-		private class PopupAdapter extends BaseAdapter {
-
-			private String[] menuItems;
-			private Context mContext;
-
-			public PopupAdapter(Context context, String[] menuItems){
-				this.menuItems = menuItems;
-				this.mContext = context;
-			}
-
-			private class MyViewHolder{
-				TextView menuItemView;
-			}
-
-			@Override
-			public int getCount() {
-				return menuItems.length;
-			}
-
-			@Override
-			public Object getItem(int position) {
-				return menuItems[position];
-			}
-
-			@Override
-			public long getItemId(int position) {
-				return position;
-			}
-
-			@Override
-			public View getView(int position, View convertView, ViewGroup parent) {
-				MyViewHolder holder;
-				if (convertView == null) {
-					convertView = LayoutInflater.from(mContext).inflate(R.layout.list_item_menu_row, parent, false);
-
-					holder = new MyViewHolder();
-					holder.menuItemView = (TextView) convertView.findViewById(R.id.menu_text);
-					convertView.setTag(holder);
-				} else {
-					holder = (MyViewHolder) convertView.getTag();
-				}
-				if (holder.menuItemView != null) {
-					holder.menuItemView.setText(menuItems[position]);
-				}
-				return convertView;
-			}
 		}
 
 	}

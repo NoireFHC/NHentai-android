@@ -60,7 +60,28 @@ public class FileCacheManager {
 		}
 		
 		conn.setConnectTimeout(5000);
-		
+
+		try {
+			if (conn.getResponseCode() != 200) {
+				if (url.contains("jpg")) {
+					try {
+						u = new URL(url.replace("jpg", "png"));
+					} catch (MalformedURLException ex) {
+						return false;
+					}
+					try {
+						conn = (HttpURLConnection) u.openConnection();
+					} catch (IOException ex) {
+						return false;
+					}
+				} else {
+					return false;
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		try {
 			return createCacheFromStrem(type, getCacheName(url), conn.getInputStream());
 		} catch (IOException e) {
