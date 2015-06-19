@@ -13,10 +13,9 @@ public class Book {
 	public String previewImageUrl, bigCoverImageUrl, titleJP, galleryId;
 	public int pageCount;
 
-	public ArrayList<String> bookImageThumbUrl;
-	public ArrayList<String> bookImageOriginUrl;
-
 	public int thumbHeight = 0, thumbWidth = 0;
+
+	public ArrayList<String> tags = new ArrayList<>();
 
 	public Book() {
 		this(null, null, null);
@@ -26,12 +25,12 @@ public class Book {
 		this.title = title;
 		this.other = other;
 		this.bookId = bookId;
-		this.bookImageThumbUrl = new ArrayList<>();
-		this.bookImageOriginUrl = new ArrayList<>();
 	}
 
 	public Book(String title, String other, String bookId, String previewImageUrl) {
-		this(title, other, bookId);
+		this.title = title;
+		this.other = other;
+		this.bookId = bookId;
 		this.previewImageUrl = previewImageUrl;
 	}
 

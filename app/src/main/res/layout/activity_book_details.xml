@@ -53,7 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:paddingTop="24dp"
+        android:paddingTop="8dp"
         android:paddingBottom="24dp"
         android:clipToPadding="false">
 
@@ -62,21 +62,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="16dp"
-            android:paddingRight="16dp">
+            android:paddingRight="16dp"
+            android:minHeight="600dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:id="@+id/tv_other"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Something places here...."
-                android:id="@+id/textView2"
-                android:layout_marginTop="5dp"/>
+                android:id="@+id/tv_title"/>
 
             <View
                 android:layout_width="match_parent"

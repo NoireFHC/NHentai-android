@@ -14,6 +14,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -39,7 +40,7 @@ public class BookDetailsActivity extends AppCompatActivity {
 	private CollapsingToolbarLayout collapsingToolbar;
 	private FloatingActionButton mFAB;
 	private RecyclerView mRecyclerView;
-	private TextView mOtherText;
+	private TextView mTitleText;
 
 	private Book book;
 
@@ -59,22 +60,14 @@ public class BookDetailsActivity extends AppCompatActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-		collapsingToolbar.setTitle(book.title);
+		collapsingToolbar.setTitle("");
 
 		imageView = (ImageView) findViewById(R.id.app_bar_background);
 		ViewCompat.setTransitionName(imageView, TRANSITION_NAME_IMAGE);
 
 		mFAB = (FloatingActionButton) findViewById(R.id.fab);
 		mRecyclerView = (RecyclerView) findViewById(R.id.book_thumb_list);
-		mOtherText = (TextView) findViewById(R.id.tv_other);
-		mFAB.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				GalleryActivity.launch(BookDetailsActivity.this, book, 0);
-			}
-		});
-
-		updateDetailsContent();
+		mTitleText = (TextView) findViewById(R.id.tv_title);
 
 		FileCacheManager cm = FileCacheManager.getInstance(getApplicationContext());
 		if (cm.cacheExistsUrl(Constants.CACHE_THUMB, book.previewImageUrl)) {
@@ -106,11 +99,20 @@ public class BookDetailsActivity extends AppCompatActivity {
 		findViewById(R.id.toolbar).invalidate();
 		findViewById(R.id.appbar).invalidate();
 
+		mFAB.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				GalleryActivity.launch(BookDetailsActivity.this, book, 0);
+			}
+		});
+
+		updateDetailsContent();
+
 		new CoverTask().execute(book);
 	}
 
 	private void updateDetailsContent() {
-		mOtherText.setText(book.other);
+		mTitleText.setText(TextUtils.isEmpty(book.titleJP) ? book.title : book.titleJP);
 
 		mRecyclerView.setHasFixedSize(true);
 		mRecyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2, LinearLayoutManager.HORIZONTAL, false));

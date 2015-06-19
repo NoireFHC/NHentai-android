@@ -32,11 +32,7 @@ public class DownloadManagerFragment extends Fragment {
 		mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 		mRecyclerView.setHasFixedSize(false);
 
-		/** 添加测试数据 */
 		ArrayList<Book> books = new ArrayList<>();
-		books.add(new Book("Well", "Test", null, "1"));
-		books.add(new Book("Hentai", "Yes", null, "0"));
-		books.add(new Book("Loli is good!", "You are right.", null, "1"));
 
 		mAdapter = new BookListRecyclerAdapter(mRecyclerView, books);
 		mAdapter.setOnItemClickListener(new AbsRecyclerViewAdapter.OnItemClickListener() {

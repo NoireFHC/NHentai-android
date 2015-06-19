@@ -16,6 +16,7 @@ import moe.feng.nhentai.cache.file.FileCacheManager;
 import moe.feng.nhentai.model.BaseMessage;
 import moe.feng.nhentai.model.Book;
 import static moe.feng.nhentai.cache.common.Constants.CACHE_COVER;
+import static moe.feng.nhentai.cache.common.Constants.CACHE_PAGE_THUMB;
 import static moe.feng.nhentai.cache.common.Constants.CACHE_THUMB;
 
 public class BookApi {
@@ -49,6 +50,16 @@ public class BookApi {
 			Log.v(TAG, "This book hasn\'t japanese name.");
 		}
 		book.bookId = id;
+
+		/** Get tags */
+		Elements tags = doc.getElementsByClass("tagbutton");
+		for (Element e : tags) {
+			String ts = e.text();
+			if (ts.contains("(")) {
+				ts = ts.substring(0, ts.indexOf("(") - 1);
+			}
+			book.tags.add(ts);
+		}
 
 		/** Get page count */
 		String htmlSrc = element.html();
@@ -109,6 +120,17 @@ public class BookApi {
 		}
 
 		return m.getBitmapUrl(CACHE_THUMB, url);
+	}
+
+	public static Bitmap getPageThumb(Context context, Book book, int position) {
+		String url = NHentaiUrl.getThumbPictureUrl(book.galleryId, Integer.toString(position));
+		FileCacheManager m = FileCacheManager.getInstance(context);
+
+		if (!m.cacheExistsUrl(CACHE_PAGE_THUMB, url) && !m.createCacheFromNetwork(CACHE_PAGE_THUMB, url)) {
+			return null;
+		}
+
+		return m.getBitmapUrl(CACHE_PAGE_THUMB, url);
 	}
 
 }
