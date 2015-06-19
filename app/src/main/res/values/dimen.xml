@@ -3,6 +3,6 @@
 
 	<dimen name="fab_transition_z">5dp</dimen>
 
-	<dimen name="navigation_view_width">240dp</dimen>
+	<dimen name="navigation_view_width">256dp</dimen>
 
 </resources>

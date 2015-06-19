@@ -23,7 +23,6 @@ public class SettingsActivity extends AbsActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		/** 获取传入参数 */
 		Intent intent = getIntent();
 		flag = intent.getIntExtra(EXTRA_FLAG, FLAG_MAIN);
 

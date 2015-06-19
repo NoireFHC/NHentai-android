@@ -52,8 +52,9 @@
 	    android:layout_width="@dimen/navigation_view_width"
 	    android:id="@+id/navigation_view"
 		android:layout_gravity="left"
-	    app:itemIconTint="?attr/colorPrimary"
 	    app:headerLayout="@layout/navigation_header"
-		app:menu="@menu/navigation_menu"/>
+		app:menu="@menu/navigation_menu"
+		app:itemTextColor="#a0000000"
+		app:itemIconTint="#8f000000"/>
 
 </android.support.v4.widget.DrawerLayout>

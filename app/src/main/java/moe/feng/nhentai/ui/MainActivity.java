@@ -1,6 +1,7 @@
 package moe.feng.nhentai.ui;
 
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
@@ -34,7 +35,14 @@ public class MainActivity extends AbsActivity implements NavigationView.OnNaviga
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, false);
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			getWindow().setStatusBarColor(getResources().getColor(R.color.deep_purple_800));
+		}
+
 		setContentView(R.layout.activity_main);
+
+		mActionBar.setDisplayHomeAsUpEnabled(true);
 
 		mSearchHistoryManager = SearchHistoryManager.getInstance(getApplicationContext(), "all");
 	}
@@ -202,9 +210,11 @@ public class MainActivity extends AbsActivity implements NavigationView.OnNaviga
 
 	@Override
 	public boolean onNavigationItemSelected(MenuItem menuItem) {
+		mDrawerLayout.closeDrawer(mNavigationView);
 		switch (menuItem.getItemId()) {
 			// TODO Update page
 			case R.id.navigation_item_home:
+				menuItem.setChecked(true);
 				return true;
 			case R.id.navigation_item_tag:
 				return true;

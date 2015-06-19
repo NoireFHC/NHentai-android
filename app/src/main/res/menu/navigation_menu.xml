@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-	<item android:id="@+id/navigation_item_home"
-	      android:title="@string/item_home"/>
+	<group android:checkableBehavior="single">
 
-	<item android:id="@+id/navigation_item_tag"
-	      android:title="@string/item_tag"/>
+		<item android:id="@+id/navigation_item_home"
+		      android:checked="true"
+		      android:icon="@drawable/ic_home_black_24dp"
+		      android:title="@string/item_home"/>
 
-	<item android:id="@+id/navigation_item_character"
-	      android:title="@string/item_character"/>
+		<item android:id="@+id/navigation_item_tag"
+		      android:icon="@drawable/ic_style_black_24dp"
+		      android:title="@string/item_tag"/>
+
+		<item android:id="@+id/navigation_item_character"
+		      android:icon="@drawable/ic_face_unlock_black_24dp"
+		      android:title="@string/item_character"/>
+
+	</group>
 
 </menu>
