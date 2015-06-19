@@ -25,6 +25,7 @@ import moe.feng.nhentai.R;
 import moe.feng.nhentai.api.BookApi;
 import moe.feng.nhentai.cache.common.Constants;
 import moe.feng.nhentai.cache.file.FileCacheManager;
+import moe.feng.nhentai.model.BaseMessage;
 import moe.feng.nhentai.model.Book;
 import moe.feng.nhentai.ui.adapter.BookThumbHorizontalRecyclerAdapter;
 import moe.feng.nhentai.ui.common.AbsRecyclerViewAdapter;
@@ -134,21 +135,17 @@ public class BookDetailsActivity extends AppCompatActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	private class BookGetTask extends AsyncTask<String, Void, Book> {
+	private class BookGetTask extends AsyncTask<String, Void, BaseMessage> {
 
 		@Override
-		protected Book doInBackground(String... params) {
-			try {
-				return BookApi.getBook(params[0]);
-			} catch (Exception e) {
-				return null;
-			}
+		protected BaseMessage doInBackground(String... params) {
+			return BookApi.getBook(params[0]);
 		}
 
 		@Override
-		protected void onPostExecute(Book result) {
-			if (result != null) {
-				book = result;
+		protected void onPostExecute(BaseMessage result) {
+			if (result.getCode() == 0) {
+				book = result.getData();
 				updateUIContent();
 			}
 		}

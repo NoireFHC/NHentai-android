@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import moe.feng.nhentai.api.common.NHentaiUrl;
 import moe.feng.nhentai.cache.file.FileCacheManager;
+import moe.feng.nhentai.model.BaseMessage;
 import moe.feng.nhentai.model.Book;
 
 import static moe.feng.nhentai.cache.common.Constants.CACHE_PAGE_IMG;
@@ -22,13 +23,16 @@ public class PageApi {
 
 	public static final String TAG = PageApi.class.getSimpleName();
 
-	public static ArrayList<Book> getPageList(String url) {
+	public static BaseMessage getPageList(String url) {
+		BaseMessage result = new BaseMessage();
+
 		Document doc;
 		try {
 			doc = Jsoup.connect(url).get();
 		} catch (IOException e) {
+			result.setCode(403);
 			e.printStackTrace();
-			return null;
+			return result;
 		}
 
 		Elements container = doc.getElementsByClass("outer-preview-container");
@@ -71,14 +75,17 @@ public class PageApi {
 			Log.i(TAG, "Get book: " + book.toJSONString());
 		}
 
-		return books;
+		result.setCode(0);
+		result.setData(books);
+
+		return result;
 	}
 
-	public static ArrayList<Book> getHomePageList(int number) {
+	public static BaseMessage getHomePageList(int number) {
 		return getPageList(NHentaiUrl.getHomePageUrl(number));
 	}
 
-	public static ArrayList<Book> getSearchPageList(String keyword, int number) {
+	public static BaseMessage getSearchPageList(String keyword, int number) {
 		return getPageList(NHentaiUrl.getSearchUrl(keyword, number));
 	}
 

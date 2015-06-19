@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import moe.feng.nhentai.R;
 import moe.feng.nhentai.api.PageApi;
+import moe.feng.nhentai.model.BaseMessage;
 import moe.feng.nhentai.model.Book;
 import moe.feng.nhentai.ui.adapter.BookListRecyclerAdapter;
 import moe.feng.nhentai.ui.common.AbsActivity;
@@ -51,6 +52,7 @@ public class SearchResultActivity extends AbsActivity {
 			mActionBar.setElevation(getResources().getDimension(R.dimen.appbar_elevation));
 		}
 
+		mSwipeRefreshLayout.setRefreshing(true);
 		new PageGetTask().execute(mNowPage);
 	}
 
@@ -108,20 +110,27 @@ public class SearchResultActivity extends AbsActivity {
 		mRecyclerView.setAdapter(adapter);
 	}
 
-	private class PageGetTask extends AsyncTask<Integer, Void, ArrayList<Book>> {
+	private class PageGetTask extends AsyncTask<Integer, Void, BaseMessage> {
 
 		@Override
-		protected ArrayList<Book> doInBackground(Integer... params) {
+		protected BaseMessage doInBackground(Integer... params) {
 			return PageApi.getSearchPageList(keyword, params[0]);
 		}
 
 		@Override
-		protected void onPostExecute(ArrayList<Book> newData) {
+		protected void onPostExecute(BaseMessage msg) {
 			mSwipeRefreshLayout.setRefreshing(false);
-			if (newData != null) {
-				if (!newData.isEmpty()) {
-					mBooks.addAll(newData);
-					mAdapter.notifyDataSetChanged();
+			if (msg != null) {
+				if (msg.getCode() == 0 && msg.getData() != null) {
+					if (!((ArrayList<Book>) msg.getData()).isEmpty()) {
+						mBooks.addAll((ArrayList<Book>) msg.getData());
+						mAdapter.notifyDataSetChanged();
+						if (mNowPage == 1) {
+							mRecyclerView.setAdapter(mAdapter);
+						}
+					} else {
+						Snackbar.make(mRecyclerView, R.string.tips_no_result, Snackbar.LENGTH_LONG).show();
+					}
 				} else if (mNowPage == 1) {
 					Snackbar.make(mRecyclerView, R.string.tips_no_result, Snackbar.LENGTH_LONG).show();
 				}

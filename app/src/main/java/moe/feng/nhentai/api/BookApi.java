@@ -13,6 +13,7 @@ import java.io.IOException;
 
 import moe.feng.nhentai.api.common.NHentaiUrl;
 import moe.feng.nhentai.cache.file.FileCacheManager;
+import moe.feng.nhentai.model.BaseMessage;
 import moe.feng.nhentai.model.Book;
 import static moe.feng.nhentai.cache.common.Constants.CACHE_COVER;
 import static moe.feng.nhentai.cache.common.Constants.CACHE_THUMB;
@@ -21,15 +22,18 @@ public class BookApi {
 
 	public static final String TAG = BookApi.class.getSimpleName();
 
-	public static Book getBook(String id) {
+	public static BaseMessage getBook(String id) {
+		BaseMessage result = new BaseMessage();
+
 		String url = NHentaiUrl.getBookDetailsUrl(id);
 
 		Document doc;
 		try {
 			doc = Jsoup.connect(url).get();
 		} catch (IOException e) {
+			result.setCode(403);
 			e.printStackTrace();
-			return null;
+			return result;
 		}
 
 		Book book = new Book();
@@ -79,7 +83,10 @@ public class BookApi {
 
 		Log.i(TAG, book.toJSONString());
 
-		return book;
+		result.setCode(0);
+		result.setData(book);
+
+		return result;
 	}
 	
 	public static Bitmap getCover(Context context, Book book) {

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import moe.feng.nhentai.R;
 import moe.feng.nhentai.api.PageApi;
+import moe.feng.nhentai.model.BaseMessage;
 import moe.feng.nhentai.model.Book;
 import moe.feng.nhentai.ui.BookDetailsActivity;
 import moe.feng.nhentai.ui.adapter.BookListRecyclerAdapter;
@@ -95,20 +96,22 @@ public class HomeFragment extends Fragment {
 		mRecyclerView.setAdapter(adapter);
 	}
 
-	private class PageGetTask extends AsyncTask<Integer, Void, ArrayList<Book>> {
+	private class PageGetTask extends AsyncTask<Integer, Void, BaseMessage> {
 
 		@Override
-		protected ArrayList<Book> doInBackground(Integer... params) {
+		protected BaseMessage doInBackground(Integer... params) {
 			return PageApi.getHomePageList(params[0]);
 		}
 
 		@Override
-		protected void onPostExecute(ArrayList<Book> newData) {
+		protected void onPostExecute(BaseMessage msg) {
 			mSwipeRefreshLayout.setRefreshing(false);
-			if (newData != null) {
-				if (!newData.isEmpty()) {
-					mBooks.addAll(newData);
-					mAdapter.notifyDataSetChanged();
+			if (msg != null) {
+				if (msg.getCode() == 0 && msg.getData() != null) {
+					if (!((ArrayList<Book>) msg.getData()).isEmpty()) {
+						mBooks.addAll((ArrayList<Book>) msg.getData());
+						mAdapter.notifyDataSetChanged();
+					}
 				} else if (mNowPage == 1) {
 					Snackbar.make(mRecyclerView, R.string.tips_network_error, Snackbar.LENGTH_LONG).show();
 				}
