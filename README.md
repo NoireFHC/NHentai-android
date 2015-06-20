@@ -1,5 +1,5 @@
 # NHBooks for Android
-![NHBooksLogo][/art/nhbooks.png]
+![NHBooksLogo](/art/nhbooks.png)
 a Material Design NHentai client for Android.
 一枚 Material Design 風格的 NHentai Android 客戶端
 
