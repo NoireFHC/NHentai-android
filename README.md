@@ -1,10 +1,12 @@
 # NHBooks for Android
 ![NHBooksLogo](/art/nhbooks.png)
+
 a Material Design NHentai client for Android.
 一枚 Material Design 風格的 NHentai Android 客戶端
 
 ### 螢幕截圖
 ![S0](/art/screenshot0.png)
+
 ![S1](/art/screenshot1.png)
 
 ## 軟體說明
@@ -12,12 +14,14 @@ a Material Design NHentai client for Android.
 
 ### 特別聲明
 該應用程式所供應的內容不適合未成年人觀看，所有內容通過 Jsoup 解析 NHentai 官網獲得，內容有任何異議或造成心理甚至生理上的問題均與本項目無關。
+
 觀看時請留意是否適用於當地法律法規。
 
 ### 聯絡我
 
 Google Plus: +Fung Jichun
-新浪微博: [@某燒餅][]
+
+新浪微博: @某燒餅
 
 ### 支持項目
 
