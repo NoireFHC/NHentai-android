@@ -52,13 +52,31 @@ public class BookApi {
 		book.bookId = id;
 
 		/** Get tags */
-		Elements tags = doc.getElementsByClass("tagbutton");
-		for (Element e : tags) {
-			String ts = e.text();
-			if (ts.contains("(")) {
-				ts = ts.substring(0, ts.indexOf("(") - 1);
+		Elements tags = doc.getElementsByClass("field-name");
+		for (Element r : tags) {
+			if (r.text().contains("Parodies")) {
+				String ts = r.getElementsByClass("tagbutton").get(0).text();
+				if (ts.contains("(")) {
+					ts = ts.substring(0, ts.indexOf("(") - 1);
+				}
+				book.parodies = ts;
 			}
-			book.tags.add(ts);
+			if (r.text().contains("Tags")) {
+				for (Element e : r.getElementsByClass("tagbutton")) {
+					String ts = e.text();
+					if (ts.contains("(")) {
+						ts = ts.substring(0, ts.indexOf("(") - 1);
+					}
+					book.tags.add(ts);
+				}
+			}
+			if (r.text().contains("Language")) {
+				String ts = r.getElementsByClass("tagbutton").get(0).text();
+				if (ts.contains("(")) {
+					ts = ts.substring(0, ts.indexOf("(") - 1);
+				}
+				book.language = ts;
+			}
 		}
 
 		/** Get page count */

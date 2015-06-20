@@ -17,7 +17,12 @@
         <item>@string/title_page_download</item>
         <item>@string/title_page_favorite</item>
     </string-array>
-    <string name="tips_network_error">It seems to failed to connect to NHentai.</string>
+    <string name="tips_network_error">Failed to connect to NHentai.</string>
+
+    <string name="activity_details">Details</string>
+    <string name="tag_type_tag">Tags:    </string>
+    <string name="tag_type_parodies">Parodies:    </string>
+    <string name="tag_type_language">Language:    </string>
 
     <string name="activity_gallery">Gallery</string>
 

@@ -53,7 +53,7 @@ public class NHentaiUrl {
 	public static String getParodyUrl(String name) {
 		String targetName = name;
 		if (targetName.contains(" ")) {
-			targetName = targetName.replaceAll(" ", "+");
+			targetName = targetName.replaceAll(" ", "-");
 		}
 		return NHENTAI_HOME + "/parody/" + targetName;
 	}
@@ -61,7 +61,7 @@ public class NHentaiUrl {
 	public static String getCharacterUrl(String name) {
 		String targetName = name;
 		if (targetName.contains(" ")) {
-			targetName = targetName.replaceAll(" ", "+");
+			targetName = targetName.replaceAll(" ", "-");
 		}
 		return NHENTAI_HOME + "/character/" + targetName;
 	}
@@ -69,7 +69,7 @@ public class NHentaiUrl {
 	public static String getTagUrl(String tag) {
 		String targetTag = tag;
 		if (targetTag.contains(" ")) {
-			targetTag = targetTag.replaceAll(" ", "+");
+			targetTag = targetTag.replaceAll(" ", "-");
 		}
 		return NHENTAI_HOME + "/tagged/" + targetTag;
 	}
@@ -77,7 +77,7 @@ public class NHentaiUrl {
 	public static String getArtistUrl(String name) {
 		String targetName = name;
 		if (targetName.contains(" ")) {
-			targetName = targetName.replaceAll(" ", "+");
+			targetName = targetName.replaceAll(" ", "-");
 		}
 		return NHENTAI_HOME + "/artist/" + targetName;
 	}
@@ -85,7 +85,7 @@ public class NHentaiUrl {
 	public static String getGroupUrl(String name) {
 		String targetName = name;
 		if (targetName.contains(" ")) {
-			targetName = targetName.replaceAll(" ", "+");
+			targetName = targetName.replaceAll(" ", "-");
 		}
 		return NHENTAI_HOME + "/group/" + targetName;
 	}
@@ -93,7 +93,7 @@ public class NHentaiUrl {
 	public static String getLanguageUrl(String name) {
 		String targetName = name;
 		if (targetName.contains(" ")) {
-			targetName = targetName.replaceAll(" ", "+");
+			targetName = targetName.replaceAll(" ", "-");
 		}
 		return NHENTAI_HOME + "/language/" + targetName;
 	}

@@ -30,4 +30,16 @@
 		<item name="android:textColorPrimary">@android:color/white</item>
 	</style>
 
+	<style name="TextTag">
+		<item name="@android:textSize">@dimen/tag_text_size</item>
+		<item name="@android:textColor">@android:color/white</item>
+		<item name="@android:background">@color/deep_purple_800</item>
+		<item name="@android:ellipsize">marquee</item>
+		<item name="@android:singleLine">true</item>
+		<item name="@android:paddingTop">4dp</item>
+		<item name="@android:paddingBottom">4dp</item>
+		<item name="@android:paddingLeft">8dp</item>
+		<item name="@android:paddingRight">8dp</item>
+	</style>
+
 </resources>

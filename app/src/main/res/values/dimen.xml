@@ -5,4 +5,8 @@
 
 	<dimen name="navigation_view_width">256dp</dimen>
 
+	<dimen name="tag_margin_x">2dp</dimen>
+	<dimen name="tag_margin_y">4dp</dimen>
+	<dimen name="tag_text_size">14dp</dimen>
+
 </resources>

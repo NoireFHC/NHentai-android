@@ -6,41 +6,43 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.ContextThemeWrapper;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+
 import moe.feng.nhentai.R;
 import moe.feng.nhentai.api.BookApi;
+import moe.feng.nhentai.api.common.NHentaiUrl;
 import moe.feng.nhentai.cache.common.Constants;
 import moe.feng.nhentai.cache.file.FileCacheManager;
 import moe.feng.nhentai.model.BaseMessage;
 import moe.feng.nhentai.model.Book;
-import moe.feng.nhentai.ui.adapter.BookThumbHorizontalRecyclerAdapter;
-import moe.feng.nhentai.ui.common.AbsRecyclerViewAdapter;
 import moe.feng.nhentai.util.AsyncTask;
 import moe.feng.nhentai.util.ColorGenerator;
 import moe.feng.nhentai.util.TextDrawable;
+import moe.feng.nhentai.view.AutoWrapLayout;
 
 public class BookDetailsActivity extends AppCompatActivity {
 
 	private ImageView imageView;
 	private CollapsingToolbarLayout collapsingToolbar;
 	private FloatingActionButton mFAB;
-	private RecyclerView mRecyclerView;
 	private TextView mTitleText;
+	private LinearLayout mTagsLayout;
 
 	private Book book;
 
@@ -66,8 +68,8 @@ public class BookDetailsActivity extends AppCompatActivity {
 		ViewCompat.setTransitionName(imageView, TRANSITION_NAME_IMAGE);
 
 		mFAB = (FloatingActionButton) findViewById(R.id.fab);
-		mRecyclerView = (RecyclerView) findViewById(R.id.book_thumb_list);
 		mTitleText = (TextView) findViewById(R.id.tv_title);
+		mTagsLayout = (LinearLayout) findViewById(R.id.book_tags_layout);
 
 		FileCacheManager cm = FileCacheManager.getInstance(getApplicationContext());
 		if (cm.cacheExistsUrl(Constants.CACHE_THUMB, book.previewImageUrl)) {
@@ -114,17 +116,111 @@ public class BookDetailsActivity extends AppCompatActivity {
 	private void updateDetailsContent() {
 		mTitleText.setText(TextUtils.isEmpty(book.titleJP) ? book.title : book.titleJP);
 
-		mRecyclerView.setHasFixedSize(true);
-		mRecyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2, LinearLayoutManager.HORIZONTAL, false));
+		updateTagsContent();
+	}
 
-		BookThumbHorizontalRecyclerAdapter adapter = new BookThumbHorizontalRecyclerAdapter(mRecyclerView, book);
-		adapter.setOnItemClickListener(new AbsRecyclerViewAdapter.OnItemClickListener() {
+	private void updateTagsContent() {
+		int x = getResources().getDimensionPixelSize(R.dimen.tag_margin_x);
+		int y = getResources().getDimensionPixelSize(R.dimen.tag_margin_y);
+		ContextThemeWrapper ctw = new ContextThemeWrapper(this, R.style.TextTag);
+
+		// Add Parodies Tags
+		LinearLayout tagGroupLayout0 = new LinearLayout(this);
+		tagGroupLayout0.setOrientation(LinearLayout.HORIZONTAL);
+		AutoWrapLayout tagLayout0 = new AutoWrapLayout(this);
+
+		TextView groupNameView0 = new TextView(this);
+		groupNameView0.setText(R.string.tag_type_parodies);
+		LinearLayout.LayoutParams lp0 = new LinearLayout.LayoutParams(
+				LinearLayout.LayoutParams.WRAP_CONTENT,
+				LinearLayout.LayoutParams.WRAP_CONTENT);
+		lp0.setMargins(x, y, x, y);
+		tagGroupLayout0.addView(groupNameView0, lp0);
+
+		TextView tagView = new TextView(ctw);
+		tagView.setText(book.parodies);
+		tagView.setBackgroundResource(R.color.deep_purple_800);
+		tagView.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onItemClick(int position, AbsRecyclerViewAdapter.ClickableViewHolder holder) {
-				GalleryActivity.launch(BookDetailsActivity.this, book, position);
+			public void onClick(View v) {
+				CategoryActivity.launch(
+						BookDetailsActivity.this,
+						NHentaiUrl.getParodyUrl(book.parodies),
+						getString(R.string.tag_type_parodies).trim() + " " + book.parodies
+				);
 			}
 		});
-		mRecyclerView.setAdapter(adapter);
+		AutoWrapLayout.LayoutParams alp = new AutoWrapLayout.LayoutParams();
+		alp.setMargins(x, y, x, y);
+		tagLayout0.addView(tagView, alp);
+		tagGroupLayout0.addView(tagLayout0);
+		mTagsLayout.addView(tagGroupLayout0);
+
+		// Add Tags
+		LinearLayout tagGroupLayout1 = new LinearLayout(this);
+		tagGroupLayout1.setOrientation(LinearLayout.HORIZONTAL);
+		AutoWrapLayout tagLayout1 = new AutoWrapLayout(this);
+
+		TextView groupNameView1 = new TextView(this);
+		groupNameView1.setText(R.string.tag_type_tag);
+		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+				LinearLayout.LayoutParams.WRAP_CONTENT,
+				LinearLayout.LayoutParams.WRAP_CONTENT);
+		lp.setMargins(x, y, x, y);
+		tagGroupLayout1.addView(groupNameView1, lp);
+
+		for (final String tag : book.tags) {
+			TextView tagView1 = new TextView(ctw);
+			tagView1.setText(tag);
+			tagView1.setBackgroundResource(R.color.deep_purple_800);
+			tagView1.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					CategoryActivity.launch(
+							BookDetailsActivity.this,
+							NHentaiUrl.getParodyUrl(tag),
+							getString(R.string.tag_type_tag).trim() + " " + tag
+					);
+				}
+			});
+			AutoWrapLayout.LayoutParams alp1 = new AutoWrapLayout.LayoutParams();
+			alp1.setMargins(x, y, x, y);
+			tagLayout1.addView(tagView1, alp1);
+		}
+		tagGroupLayout1.addView(tagLayout1);
+		mTagsLayout.addView(tagGroupLayout1);
+
+		// Add Language Tag
+		LinearLayout tagGroupLayout2 = new LinearLayout(this);
+		tagGroupLayout2.setOrientation(LinearLayout.HORIZONTAL);
+		AutoWrapLayout tagLayout2 = new AutoWrapLayout(this);
+
+		TextView groupNameView2 = new TextView(this);
+		groupNameView2.setText(R.string.tag_type_language);
+		LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(
+				LinearLayout.LayoutParams.WRAP_CONTENT,
+				LinearLayout.LayoutParams.WRAP_CONTENT);
+		lp2.setMargins(x, y, x, y);
+		tagGroupLayout2.addView(groupNameView2, lp2);
+
+		TextView tagView2 = new TextView(ctw);
+		tagView2.setText(book.language);
+		tagView2.setBackgroundResource(R.color.deep_purple_800);
+		tagView2.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				CategoryActivity.launch(
+						BookDetailsActivity.this,
+						NHentaiUrl.getParodyUrl(book.language),
+						getString(R.string.tag_type_language).trim() + " " + book.language
+				);
+			}
+		});
+		AutoWrapLayout.LayoutParams alp2 = new AutoWrapLayout.LayoutParams();
+		alp.setMargins(x, y, x, y);
+		tagLayout2.addView(tagView2, alp2);
+		tagGroupLayout2.addView(tagLayout2);
+		mTagsLayout.addView(tagGroupLayout2);
 	}
 
 	@Override
@@ -149,6 +245,8 @@ public class BookDetailsActivity extends AppCompatActivity {
 			if (result.getCode() == 0) {
 				book = result.getData();
 				updateUIContent();
+			} else {
+				Snackbar.make(findViewById(R.id.main_content), R.string.tips_network_error, Snackbar.LENGTH_LONG).show();
 			}
 		}
 

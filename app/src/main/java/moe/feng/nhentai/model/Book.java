@@ -15,6 +15,7 @@ public class Book {
 
 	public int thumbHeight = 0, thumbWidth = 0;
 
+	public String parodies, language;
 	public ArrayList<String> tags = new ArrayList<>();
 
 	public Book() {
