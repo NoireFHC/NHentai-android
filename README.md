@@ -4,8 +4,8 @@ a Material Design NHentai client for Android.
 一枚 Material Design 風格的 NHentai Android 客戶端
 
 ### 螢幕截圖
-![S0][/art/screenshot0.png]
-![S1][/art/screenshot1.png]
+![S0](/art/screenshot0.png)
+![S1](/art/screenshot1.png)
 
 ## 軟體說明
 該程式按照 Material Design 設計規範，提供簡潔、美觀的介面，並通過 API 從 NHentai 獲取本子，給你一個輕量、方便的客戶端。
