@@ -15,6 +15,7 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 	private Preference mLicensePref;
 	private Preference mWeiboPref;
 	private Preference mGooglePlusPref;
+	private Preference mGithubPref;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,7 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 		mLicensePref = (Preference) findPreference("license");
 		mWeiboPref = (Preference) findPreference("weibo");
 		mGooglePlusPref = (Preference) findPreference("google_plus");
+		mGithubPref = (Preference) findPreference("github");
 
 		String version = "Unknown";
 		try {
@@ -38,6 +40,7 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 		mLicensePref.setOnPreferenceClickListener(this);
 		mWeiboPref.setOnPreferenceClickListener(this);
 		mGooglePlusPref.setOnPreferenceClickListener(this);
+		mGithubPref.setOnPreferenceClickListener(this);
 	}
 
 	@Override
@@ -53,6 +56,9 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 		if (pref == mGooglePlusPref) {
 			openWebUrl("https://plus.google.com/+FungJichun");
 			return true;
+		}
+		if (pref == mGithubPref) {
+			openWebUrl(getString(R.string.set_title_github_website));
 		}
 		return false;
 	}

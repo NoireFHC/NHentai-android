@@ -43,5 +43,7 @@
     <string name="set_title_weibo_summary">\@某燒餅</string>
     <string name="set_title_google_plus">Google Plus</string>
     <string name="set_title_google_plus_summary">+Fung Jichun</string>
+    <string name="set_title_github">Github Repo</string>
+    <string name="set_title_github_website">"https://github.com/fython/NHentai-android"</string>
 
 </resources>

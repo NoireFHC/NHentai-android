@@ -12,6 +12,11 @@
 		    android:title="@string/settings_license"/>
 
 		<moe.feng.nhentai.view.pref.Preference
+			android:key="github"
+		    android:title="@string/set_title_github"
+		    android:summary="@string/set_title_github_website"/>
+
+		<moe.feng.nhentai.view.pref.Preference
 			android:key="google_plus"
 		    android:title="@string/set_title_google_plus"
 		    android:summary="@string/set_title_google_plus_summary"/>
