@@ -18,11 +18,16 @@
         <item>@string/title_page_favorite</item>
     </string-array>
     <string name="tips_network_error">Failed to connect to NHentai.</string>
+    <string name="snack_action_try_again">Try again</string>
 
     <string name="activity_details">Details</string>
-    <string name="tag_type_tag">Tags:    </string>
-    <string name="tag_type_parodies">Parodies:    </string>
-    <string name="tag_type_language">Language:    </string>
+    <string name="tag_type_tag">Tags: </string>
+    <string name="tag_type_parodies">Parodies: </string>
+    <string name="tag_type_language">Language: </string>
+    <string name="tag_type_characters">Characters: </string>
+    <string name="tag_type_artists">Artists: </string>
+    <string name="tag_type_group">Groups: </string>
+    <string name="tag_type_upload_time">Uploaded time: </string>
 
     <string name="activity_gallery">Gallery</string>
 

@@ -9,6 +9,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.File;
 import java.io.IOException;
 
 import moe.feng.nhentai.api.common.NHentaiUrl;
@@ -77,6 +78,29 @@ public class BookApi {
 				}
 				book.language = ts;
 			}
+			if (r.text().contains("Groups")) {
+				String ts = r.getElementsByClass("tagbutton").get(0).text();
+				if (ts.contains("(")) {
+					ts = ts.substring(0, ts.indexOf("(") - 1);
+				}
+				book.group = ts;
+			}
+			if (r.text().contains("Artists")) {
+				String ts = r.getElementsByClass("tagbutton").get(0).text();
+				if (ts.contains("(")) {
+					ts = ts.substring(0, ts.indexOf("(") - 1);
+				}
+				book.artist = ts;
+			}
+			if (r.text().contains("Characters")) {
+				for (Element e : r.getElementsByClass("tagbutton")) {
+					String ts = e.text();
+					if (ts.contains("(")) {
+						ts = ts.substring(0, ts.indexOf("(") - 1);
+					}
+					book.characters.add(ts);
+				}
+			}
 		}
 
 		/** Get page count */
@@ -88,6 +112,15 @@ public class BookApi {
 			s = s.substring(s.lastIndexOf("<div>") + "<div>".length(), s.length()).trim();
 			System.out.println(s);
 			book.pageCount = Integer.valueOf(s);
+		} catch (Exception e) {
+
+		}
+
+		/** Get uploaded time */
+		try {
+			Element timeElement = doc.getElementsByTag("time").get(0);
+			book.uploadTime = timeElement.attr("datetime");
+			book.uploadTimeText = timeElement.text();
 		} catch (Exception e) {
 
 		}
@@ -149,6 +182,39 @@ public class BookApi {
 		}
 
 		return m.getBitmapUrl(CACHE_PAGE_THUMB, url);
+	}
+
+	public static File getCoverFile(Context context, Book book) {
+		String url = book.bigCoverImageUrl;
+		FileCacheManager m = FileCacheManager.getInstance(context);
+
+		if (!m.cacheExistsUrl(CACHE_COVER, url) && !m.createCacheFromNetwork(CACHE_COVER, url)) {
+			return null;
+		}
+
+		return m.getBitmapUrlFile(CACHE_COVER, url);
+	}
+
+	public static File getThumbFile(Context context, Book book) {
+		String url = book.previewImageUrl;
+		FileCacheManager m = FileCacheManager.getInstance(context);
+
+		if (!m.cacheExistsUrl(CACHE_THUMB, url) && !m.createCacheFromNetwork(CACHE_THUMB, url)) {
+			return null;
+		}
+
+		return m.getBitmapUrlFile(CACHE_THUMB, url);
+	}
+
+	public static File getPageThumbFile(Context context, Book book, int position) {
+		String url = NHentaiUrl.getThumbPictureUrl(book.galleryId, Integer.toString(position));
+		FileCacheManager m = FileCacheManager.getInstance(context);
+
+		if (!m.cacheExistsUrl(CACHE_PAGE_THUMB, url) && !m.createCacheFromNetwork(CACHE_PAGE_THUMB, url)) {
+			return null;
+		}
+
+		return m.getBitmapUrlFile(CACHE_PAGE_THUMB, url);
 	}
 
 }

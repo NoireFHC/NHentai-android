@@ -7,6 +7,7 @@
 
 	<dimen name="tag_margin_x">2dp</dimen>
 	<dimen name="tag_margin_y">4dp</dimen>
-	<dimen name="tag_text_size">14dp</dimen>
+	<dimen name="tag_text_size">14sp</dimen>
+	<dimen name="tag_title_width">72sp</dimen>
 
 </resources>

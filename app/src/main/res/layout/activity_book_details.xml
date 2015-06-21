@@ -52,10 +52,11 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:paddingTop="8dp"
+        android:id="@+id/scrollView"
+        android:paddingTop="24dp"
         android:paddingBottom="24dp"
-        android:clipToPadding="false">
+        android:clipToPadding="false"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:orientation="vertical"
@@ -63,27 +64,46 @@
             android:layout_height="wrap_content"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:minHeight="600dp">
+            android:minHeight="420dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:id="@+id/tv_title"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@android:color/black"
-                android:alpha="0.3"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="24dp"/>
+            <moe.feng.nhentai.view.WheelProgressView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="128dp"
+                android:layout_marginBottom="128dp"
+                android:id="@+id/wheel_progress"
+                app:matProg_barColor="@color/pink_500"
+                app:matProg_barWidth="4dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/book_tags_layout"
-                android:orientation="vertical"/>
+                android:id="@+id/book_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:id="@+id/tv_title"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@android:color/black"
+                    android:alpha="0.3"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="24dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/book_tags_layout"
+                    android:orientation="vertical"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 

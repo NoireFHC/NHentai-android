@@ -51,8 +51,8 @@ public class GalleryActivity extends AbsActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setTitle(book.titleJP != null ? book.titleJP : book.title);
 
-		mAppBar = findViewById(R.id.my_app_bar);
-		mPager = (ViewPager) findViewById(R.id.pager);
+		mAppBar = $(R.id.my_app_bar);
+		mPager = $(R.id.pager);
 		mPagerAdpater = new GalleryPagerAdapter(getFragmentManager(), book);
 		mPager.setAdapter(mPagerAdpater);
 		mPager.setCurrentItem(page_num, false);

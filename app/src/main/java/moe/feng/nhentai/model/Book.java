@@ -15,8 +15,11 @@ public class Book {
 
 	public int thumbHeight = 0, thumbWidth = 0;
 
-	public String parodies, language;
+	public String parodies, language, artist, group;
 	public ArrayList<String> tags = new ArrayList<>();
+	public ArrayList<String> characters = new ArrayList<>();
+
+	public String uploadTime, uploadTimeText;
 
 	public Book() {
 		this(null, null, null);

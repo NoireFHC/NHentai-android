@@ -31,4 +31,7 @@ dependencies {
 	compile 'org.jsoup:jsoup:1.8.2'
 	compile 'com.github.chrisbanes.photoview:library:1.2.3'
 	compile 'com.squareup.picasso:picasso:2.5.2'
+	compile ('com.github.florent37:materialimageloading:1.0.1@aar'){
+		transitive = true
+	}
 }

@@ -50,14 +50,14 @@ public abstract class AbsActivity extends AppCompatActivity {
 		super.setContentView(layoutResId);
 
 		try {
-			View statusHeaderView = findViewById(R.id.status_bar_header);
+			View statusHeaderView = $(R.id.status_bar_header);
 			statusHeaderView.getLayoutParams().height = statusBarHeight;
 		} catch (NullPointerException e) {
 			Log.e("setContentView", "Cannot find status header.");
 		}
 
 		try {
-			mToolbar = (Toolbar) findViewById(R.id.toolbar);
+			mToolbar = $(R.id.toolbar);
 			setSupportActionBar(mToolbar);
 		} catch (Exception e) {
 			Log.e("setContentView", "Cannot find toolbar.");
@@ -75,6 +75,10 @@ public abstract class AbsActivity extends AppCompatActivity {
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	protected <T extends View> T $(int id) {
+		return (T) findViewById(id);
 	}
 
 }

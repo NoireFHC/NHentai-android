@@ -187,7 +187,15 @@ public class FileCacheManager {
 	public Bitmap getBitmapUrl(String type, String url) {
 		return getBitmap(type, getCacheName(url));
 	}
-	
+
+	public File getBitmapFile(String type, String name) {
+		return new File(getCachePath(type, name));
+	}
+
+	public File getBitmapUrlFile(String type, String url) {
+		return getBitmapFile(type, getCacheName(url));
+	}
+
 	private String getCacheName(String url) {
 		return url.replaceAll("/", ".").replaceAll(":", "");
 	}

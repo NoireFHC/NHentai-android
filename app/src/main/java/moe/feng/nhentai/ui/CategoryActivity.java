@@ -59,8 +59,8 @@ public class CategoryActivity extends AbsActivity {
 
 	@Override
 	protected void setUpViews() {
-		mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-		mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+		mRecyclerView = $(R.id.recycler_view);
+		mSwipeRefreshLayout = $(R.id.swipe_refresh_layout);
 
 		mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 		mRecyclerView.setLayoutManager(mLayoutManager);

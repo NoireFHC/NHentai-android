@@ -49,12 +49,12 @@ public class MainActivity extends AbsActivity implements NavigationView.OnNaviga
 
 	@Override
 	protected void setUpViews() {
-		mPager = (ViewPager) findViewById(R.id.viewpager);
-		mTabLayout = (TabLayout) findViewById(R.id.tabs);
-		mSearchBox = (SearchBox) findViewById(R.id.search_box);
+		mPager = $(R.id.viewpager);
+		mTabLayout = $(R.id.tabs);
+		mSearchBox = $(R.id.search_box);
 
-		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-		mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
+		mDrawerLayout = $(R.id.drawer_layout);
+		mNavigationView = $(R.id.navigation_view);
 		mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
 			@Override
 			public void onDrawerOpened(View drawerView) {

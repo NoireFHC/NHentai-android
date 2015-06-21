@@ -113,7 +113,20 @@ public class HomeFragment extends Fragment {
 						mAdapter.notifyDataSetChanged();
 					}
 				} else if (mNowPage == 1) {
-					Snackbar.make(mRecyclerView, R.string.tips_network_error, Snackbar.LENGTH_LONG).show();
+					Snackbar.make(
+							mRecyclerView,
+							R.string.tips_network_error,
+							Snackbar.LENGTH_LONG
+					).setAction(
+							R.string.snack_action_try_again,
+							new View.OnClickListener() {
+								@Override
+								public void onClick(View view) {
+									mSwipeRefreshLayout.setRefreshing(true);
+									new PageGetTask().execute(mNowPage);
+								}
+							}
+					).show();
 				}
 			}
 		}
