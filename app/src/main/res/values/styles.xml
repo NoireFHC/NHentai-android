@@ -20,6 +20,10 @@
 		<item name="android:textColorPrimary">@android:color/white</item>
 	</style>
 
+	<style name="Theme.NHBooks.Light.DarkActionBar.Fix" parent="Theme.NHBooks.Light.DarkActionBar">
+		<item name="android:textColorPrimary">@color/primary_text_default_material_light</item>
+	</style>
+
 	<style name="Theme.NHBooks.Dark" parent="Base.Theme.NHBooks.Dark">
 		<item name="windowActionBar">false</item>
 		<item name="windowNoTitle">true</item>

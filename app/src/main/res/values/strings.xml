@@ -37,6 +37,11 @@
 
     <string name="settings_main">Settings</string>
     <string name="category_about">About</string>
+    <string name="set_title_app_version">Application version</string>
     <string name="settings_license">Licenses</string>
+    <string name="set_title_weibo">Sina Weibo</string>
+    <string name="set_title_weibo_summary">\@某燒餅</string>
+    <string name="set_title_google_plus">Google Plus</string>
+    <string name="set_title_google_plus_summary">+Fung Jichun</string>
 
 </resources>

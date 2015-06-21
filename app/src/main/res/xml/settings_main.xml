@@ -4,8 +4,22 @@
 	<PreferenceCategory android:key="about" android:title="@string/category_about">
 
 		<moe.feng.nhentai.view.pref.Preference
+			android:key="version"
+		    android:title="@string/set_title_app_version"/>
+
+		<moe.feng.nhentai.view.pref.Preference
 			android:key="license"
 		    android:title="@string/settings_license"/>
+
+		<moe.feng.nhentai.view.pref.Preference
+			android:key="google_plus"
+		    android:title="@string/set_title_google_plus"
+		    android:summary="@string/set_title_google_plus_summary"/>
+
+		<moe.feng.nhentai.view.pref.Preference
+			android:key="weibo"
+		    android:title="@string/set_title_weibo"
+		    android:summary="@string/set_title_weibo_summary"/>
 
 	</PreferenceCategory>
 

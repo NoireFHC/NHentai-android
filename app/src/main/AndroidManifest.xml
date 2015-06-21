@@ -58,7 +58,7 @@
         <activity
             android:name=".ui.SettingsActivity"
             android:label="@string/settings_main"
-            android:theme="@style/Theme.NHBooks.Light.DarkActionBar">
+            android:theme="@style/Theme.NHBooks.Light.DarkActionBar.Fix">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
