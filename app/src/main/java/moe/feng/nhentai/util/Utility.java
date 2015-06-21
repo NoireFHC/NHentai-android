@@ -3,6 +3,8 @@ package moe.feng.nhentai.util;
 import android.content.Context;
 import android.os.Build;
 
+import java.lang.reflect.Method;
+
 public class Utility {
 
 	public static boolean isChrome() {
@@ -32,6 +34,17 @@ public class Utility {
 			return s;
 		}
 		return null;
+	}
+
+	public static String getSystemProperties(String key) {
+		try {
+			Class c = Class.forName("android.os.SystemProperties");
+			Method m = c.getDeclaredMethod("get", String.class);
+			m.setAccessible(true);
+			return (String) m.invoke(null, key);
+		} catch (Throwable e) {
+			return "";
+		}
 	}
 
 }

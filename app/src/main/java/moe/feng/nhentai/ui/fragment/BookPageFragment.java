@@ -10,7 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.github.florent37.materialimageloading.MaterialImageLoading;
 import com.google.gson.Gson;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
 
 import moe.feng.nhentai.R;
 import moe.feng.nhentai.api.PageApi;
@@ -58,26 +63,38 @@ public class BookPageFragment extends Fragment {
 		return view;
 	}
 
-	private class DownloadTask extends AsyncTask<Void, Void, Bitmap> {
+	private class DownloadTask extends AsyncTask<Void, Void, File> {
 
 		@Override
-		protected Bitmap doInBackground(Void... params) {
-			return PageApi.getPageOriginImage(getActivity().getApplicationContext(), book, pageNum);
+		protected File doInBackground(Void... params) {
+			return PageApi.getPageOriginImageFile(getActivity().getApplicationContext(), book, pageNum);
 		}
 
 		@Override
-		protected void onPostExecute(Bitmap result) {
+		protected void onPostExecute(File result) {
 			super.onPostExecute(result);
 
 			if (result != null) {
-				mImageView.setImageBitmap(result);
-				mPhotoViewAttacher.update();
-				mPhotoViewAttacher.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
-					@Override
-					public void onViewTap(View view, float v, float v1) {
-						((GalleryActivity) getActivity()).toggleControlBar();
-					}
-				});
+				Picasso.with(getActivity().getApplicationContext())
+						.load(result)
+						.into(mImageView, new Callback() {
+							@Override
+							public void onSuccess() {
+								MaterialImageLoading.animate(mImageView).setDuration(700).start();
+								mPhotoViewAttacher.update();
+								mPhotoViewAttacher.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
+									@Override
+									public void onViewTap(View view, float v, float v1) {
+										((GalleryActivity) getActivity()).toggleControlBar();
+									}
+								});
+							}
+
+							@Override
+							public void onError() {
+
+							}
+						});
 			}
 		}
 

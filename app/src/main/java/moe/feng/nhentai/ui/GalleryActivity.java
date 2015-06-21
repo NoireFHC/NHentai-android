@@ -15,6 +15,7 @@ import moe.feng.nhentai.R;
 import moe.feng.nhentai.model.Book;
 import moe.feng.nhentai.ui.adapter.GalleryPagerAdapter;
 import moe.feng.nhentai.ui.common.AbsActivity;
+import moe.feng.nhentai.util.FullScreenHelper;
 
 public class GalleryActivity extends AbsActivity {
 
@@ -25,19 +26,23 @@ public class GalleryActivity extends AbsActivity {
 	private GalleryPagerAdapter mPagerAdpater;
 	private View mAppBar;
 
+	private FullScreenHelper mFullScreenHelper;
+
 	private static final String EXTRA_BOOK_DATA = "book_data", EXTRA_FISRT_PAGE = "first_page";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if (Build.VERSION.SDK_INT >= 19) {
-			getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-			getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-			if (Build.VERSION.SDK_INT >= 21) {
-				getWindow().setStatusBarColor(Color.TRANSPARENT);
-				getWindow().setNavigationBarColor(Color.TRANSPARENT);
-			}
+
+		if (Build.VERSION.SDK_INT >= 21) {
+			getWindow().setStatusBarColor(Color.TRANSPARENT);
+			getWindow().setNavigationBarColor(Color.TRANSPARENT);
 		}
+
+		mFullScreenHelper = new FullScreenHelper(this);
+		// 别问我为什么这么干 让我先冷静一下→_→
+		mFullScreenHelper.setFullScreen(true);
+		mFullScreenHelper.setFullScreen(false);
 
 		Intent intent = getIntent();
 		book = new Gson().fromJson(intent.getStringExtra(EXTRA_BOOK_DATA), Book.class);
@@ -69,8 +74,19 @@ public class GalleryActivity extends AbsActivity {
 	public void toggleControlBar() {
 		if (mAppBar.getAlpha() != 0f) {
 			mAppBar.animate().alpha(0f).start();
+			mFullScreenHelper.setFullScreen(true);
 		} else if (mAppBar.getAlpha() != 1f) {
 			mAppBar.animate().alpha(1f).start();
+			mFullScreenHelper.setFullScreen(false);
+		}
+	}
+
+	@Override
+	public void onBackPressed() {
+		if (mAppBar.getAlpha() != 1f) {
+			toggleControlBar();
+		} else {
+			super.onBackPressed();
 		}
 	}
 

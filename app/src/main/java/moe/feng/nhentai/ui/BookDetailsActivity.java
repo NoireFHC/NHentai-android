@@ -444,8 +444,6 @@ public class BookDetailsActivity extends AppCompatActivity {
 		protected void onPostExecute(File result) {
 			Picasso.with(getApplicationContext())
 					.load(result)
-					.fit()
-					.centerCrop()
 					.into(mImageView, new Callback() {
 						@Override
 						public void onSuccess() {

@@ -9,6 +9,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -98,6 +99,17 @@ public class PageApi {
 		}
 
 		return m.getBitmapUrl(CACHE_PAGE_IMG, url);
+	}
+
+	public static File getPageOriginImageFile(Context context, Book book, int page_num) {
+		String url = NHentaiUrl.getOriginPictureUrl(book.galleryId, String.valueOf(page_num));
+		FileCacheManager m = FileCacheManager.getInstance(context);
+
+		if (!m.cacheExistsUrl(CACHE_PAGE_IMG, url) && !m.createCacheFromNetwork(CACHE_PAGE_IMG, url)) {
+			return null;
+		}
+
+		return m.getBitmapUrlFile(CACHE_PAGE_IMG, url);
 	}
 
 }
